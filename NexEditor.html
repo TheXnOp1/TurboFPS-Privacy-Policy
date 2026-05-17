@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nex Editor — TurboFPS Pro User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --md-primary: #6750A4;
+    --md-on-primary: #FFFFFF;
+    --md-primary-container: #EADDFF;
+    --md-on-primary-container: #21005D;
+    --md-secondary: #625B71;
+    --md-secondary-container: #E8DEF8;
+    --md-tertiary: #7D5260;
+    --md-tertiary-container: #FFD8E4;
+    --md-surface: #FFFBFE;
+    --md-surface-variant: #E7E0EC;
+    --md-on-surface: #1C1B1F;
+    --md-on-surface-variant: #49454F;
+    --md-outline: #79747E;
+    --md-outline-variant: #CAC4D0;
+    --md-error: #B3261E;
+    --md-error-container: #F9DEDC;
+    --md-on-error-container: #410E0B;
+    --md-success-container: #D4EDDA;
+    --md-on-success-container: #155724;
+    --md-warning-container: #FFF3CD;
+    --md-on-warning-container: #856404;
+    --md-info-container: #D1ECF1;
+    --md-on-info-container: #0C5460;
+    --md-elevation-1: 0 1px 2px rgba(0,0,0,.12), 0 1px 3px 1px rgba(0,0,0,.08);
+    --md-elevation-2: 0 1px 2px rgba(0,0,0,.16), 0 2px 6px 2px rgba(0,0,0,.12);
+    --md-elevation-3: 0 4px 8px 3px rgba(0,0,0,.12), 0 1px 3px rgba(0,0,0,.16);
+    --sidebar-w: 280px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Google Sans', sans-serif;
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── TOP APP BAR ── */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 64px;
+    background: var(--md-surface);
+    border-bottom: 1px solid var(--md-outline-variant);
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 24px;
+    box-shadow: var(--md-elevation-1);
+  }
+  .top-bar .logo-chip {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .top-bar .logo-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--md-primary), #9c27b0);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: 700;
+  }
+  .top-bar h1 {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--md-on-surface);
+    letter-spacing: 0;
+  }
+  .top-bar .subtitle {
+    font-size: 12px; color: var(--md-on-surface-variant);
+    background: var(--md-secondary-container);
+    padding: 3px 10px; border-radius: 20px;
+    font-weight: 500; margin-left: 4px;
+  }
+  .top-bar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .badge {
+    padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    background: var(--md-primary); color: var(--md-on-primary); letter-spacing: .4px;
+  }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; padding-top: 64px; min-height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    position: fixed; top: 64px; left: 0; bottom: 0;
+    overflow-y: auto; overflow-x: hidden;
+    background: var(--md-surface);
+    border-right: 1px solid var(--md-outline-variant);
+    padding: 16px 12px 32px;
+    scroll-behavior: smooth;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--md-outline-variant); border-radius: 4px; }
+
+  .nav-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+    color: var(--md-on-surface-variant); text-transform: uppercase;
+    padding: 12px 12px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border-radius: 28px;
+    cursor: pointer; transition: background .15s; text-decoration: none;
+    color: var(--md-on-surface-variant); font-size: 14px; font-weight: 500;
+    position: relative;
+  }
+  .nav-item:hover { background: rgba(103,80,164,.08); color: var(--md-primary); }
+  .nav-item.active {
+    background: var(--md-secondary-container);
+    color: var(--md-on-primary-container);
+  }
+  .nav-item .nav-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--md-primary-container); color: var(--md-on-primary-container);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .nav-item.active .nav-num { background: var(--md-primary); color: #fff; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1; padding: 40px 48px 80px;
+    max-width: 900px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--md-primary) 0%, #9c27b0 60%, #e91e63 100%);
+    border-radius: 28px; padding: 48px 40px;
+    color: #fff; margin-bottom: 48px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: rgba(255,255,255,.08);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -40px; right: 60px;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: rgba(255,255,255,.05);
+  }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; opacity: .8; margin-bottom: 12px;
+  }
+  .hero h2 {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: 40px; font-weight: 700; line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero p { font-size: 16px; opacity: .85; max-width: 480px; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .hero-chip {
+    padding: 6px 16px; border-radius: 20px;
+    background: rgba(255,255,255,.18); color: #fff;
+    font-size: 13px; font-weight: 500; backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,.25);
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 48px;
+    animation: fadeUp .4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+  .section-num {
+    width: 36px; height: 36px; border-radius: 12px;
+    background: var(--md-primary); color: #fff;
+    font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Google Sans Display', sans-serif;
+    font-size: 22px; font-weight: 700; color: var(--md-on-surface);
+  }
+  .section-sub {
+    font-size: 14px; color: var(--md-on-surface-variant); margin-top: 2px;
+  }
+
+  h3.sub-heading {
+    font-size: 16px; font-weight: 700; color: var(--md-on-surface);
+    margin: 24px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  h3.sub-heading::before {
+    content: ''; width: 4px; height: 18px;
+    background: var(--md-primary); border-radius: 2px; display: inline-block;
+  }
+
+  p { color: var(--md-on-surface); font-size: 15px; margin-bottom: 14px; line-height: 1.7; }
+
+  /* ── FEATURE TABLE / CARD TABLE ── */
+  .feat-table {
+    width: 100%; border-collapse: collapse; margin-bottom: 20px;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: var(--md-elevation-1);
+  }
+  .feat-table thead tr { background: var(--md-primary); }
+  .feat-table thead th {
+    color: #fff; font-size: 13px; font-weight: 600;
+    text-align: left; padding: 12px 18px; letter-spacing: .4px;
+  }
+  .feat-table tbody tr { border-bottom: 1px solid var(--md-outline-variant); }
+  .feat-table tbody tr:last-child { border-bottom: none; }
+  .feat-table tbody tr:nth-child(even) { background: var(--md-surface-variant); }
+  .feat-table tbody tr:nth-child(odd) { background: var(--md-surface); }
+  .feat-table td {
+    padding: 12px 18px; font-size: 14px; vertical-align: top;
+  }
+  .feat-table td:first-child { font-weight: 600; color: var(--md-primary); white-space: nowrap; }
+
+  /* ── CALLOUT CARDS ── */
+  .callout {
+    border-radius: 16px; padding: 16px 20px;
+    margin: 16px 0; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .callout-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .callout-body { flex: 1; }
+  .callout-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .callout-text { font-size: 14px; line-height: 1.6; }
+
+  .callout.warning {
+    background: var(--md-warning-container);
+    border: 1px solid #ffc10780;
+  }
+  .callout.warning .callout-title { color: var(--md-on-warning-container); }
+  .callout.warning .callout-text { color: var(--md-on-warning-container); }
+
+  .callout.tip {
+    background: var(--md-success-container);
+    border: 1px solid #28a74540;
+  }
+  .callout.tip .callout-title { color: var(--md-on-success-container); }
+  .callout.tip .callout-text { color: var(--md-on-success-container); }
+
+  .callout.info {
+    background: var(--md-info-container);
+    border: 1px solid #17a2b840;
+  }
+  .callout.info .callout-title { color: var(--md-on-info-container); }
+  .callout.info .callout-text { color: var(--md-on-info-container); }
+
+  .callout.success {
+    background: #d4edda;
+    border: 1px solid #28a74540;
+  }
+  .callout.success .callout-title { color: #155724; }
+  .callout.success .callout-text { color: #155724; }
+
+  /* ── FPS PRESET CHIPS ── */
+  .fps-grid {
+    display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0;
+  }
+  .fps-chip {
+    padding: 10px 20px; border-radius: 20px;
+    font-size: 14px; font-weight: 700; cursor: default;
+    border: 2px solid transparent; transition: transform .15s;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .fps-chip:hover { transform: translateY(-2px); }
+  .fps-chip .fps-val { font-size: 18px; }
+  .fps-chip .fps-lbl { font-size: 10px; font-weight: 500; opacity: .75; }
+  .fps-chip.low    { background: #E8F5E9; color: #2E7D32; border-color: #a5d6a7; }
+  .fps-chip.med    { background: #FFF8E1; color: #F57F17; border-color: #ffe082; }
+  .fps-chip.high   { background: #E3F2FD; color: #1565C0; border-color: #90caf9; }
+  .fps-chip.ultra  { background: var(--md-primary-container); color: var(--md-on-primary-container); border-color: #b39ddb; }
+
+  /* ── STEPS ── */
+  .steps { counter-reset: step; list-style: none; margin: 16px 0; }
+  .steps li {
+    counter-increment: step;
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--md-outline-variant);
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step);
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--md-primary); color: #fff;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .steps li span { font-size: 15px; line-height: 1.6; }
+
+  /* ── GAME CHIPS ── */
+  .game-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+  .game-chip {
+    padding: 8px 20px; border-radius: 20px;
+    font-size: 13px; font-weight: 600;
+    border: 2px solid var(--md-primary);
+    color: var(--md-primary); background: var(--md-primary-container);
+    cursor: default;
+  }
+
+  /* ── FAB SECTION ── */
+  .fab-grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+  .fab-card {
+    flex: 1 1 160px;
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: 16px; padding: 16px;
+    box-shadow: var(--md-elevation-1);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .fab-card .fab-icon { font-size: 24px; }
+  .fab-card .fab-name { font-size: 14px; font-weight: 700; color: var(--md-on-surface); }
+  .fab-card .fab-desc { font-size: 13px; color: var(--md-on-surface-variant); line-height: 1.5; }
+
+  /* ── TAB PILLS ── */
+  .tab-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .tab-pill {
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 13px; font-weight: 600;
+    background: var(--md-secondary-container);
+    color: var(--md-secondary);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-left: var(--sidebar-w);
+    padding: 24px 48px;
+    border-top: 1px solid var(--md-outline-variant);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: var(--md-on-surface-variant);
+  }
+  .footer a { color: var(--md-primary); text-decoration: none; font-weight: 600; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 24px 20px 60px; }
+    .footer { margin-left: 0; padding: 20px; flex-direction: column; gap: 8px; }
+    .hero h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP APP BAR -->
+<header class="top-bar">
+  <div class="logo-chip">
+    <div class="logo-icon">N</div>
+    <div>
+      <h1>Nex Editor</h1>
+    </div>
+    <span class="subtitle">Beta</span>
+  </div>
+  <div class="top-bar-right">
+    <span class="badge">TurboFPS Pro</span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar">
+    <div class="nav-label">User Guide</div>
+    <a href="#s1"  class="nav-item active"><span class="nav-num">1</span> What is Nex Editor?</a>
+    <a href="#s2"  class="nav-item"><span class="nav-num">2</span> Requirements</a>
+    <a href="#s3"  class="nav-item"><span class="nav-num">3</span> How to Open</a>
+    <a href="#s4"  class="nav-item"><span class="nav-num">4</span> Selecting Your Game</a>
+    <a href="#s5"  class="nav-item"><span class="nav-num">5</span> Mode Selector</a>
+    <a href="#s6"  class="nav-item"><span class="nav-num">6</span> FPS Tab</a>
+    <a href="#s7"  class="nav-item"><span class="nav-num">7</span> Graphics Tab</a>
+    <a href="#s8"  class="nav-item"><span class="nav-num">8</span> Style Tab</a>
+    <a href="#s9"  class="nav-item"><span class="nav-num">9</span> Profile Tab</a>
+    <a href="#s10" class="nav-item"><span class="nav-num">10</span> Advanced Tab</a>
+    <a href="#s11" class="nav-item"><span class="nav-num">11</span> Presets Tab</a>
+    <a href="#s12" class="nav-item"><span class="nav-num">12</span> Applying Settings</a>
+    <a href="#s13" class="nav-item"><span class="nav-num">13</span> Quick Start</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">TurboFPS Pro · by TheXnOp1</div>
+      <h2>Nex Editor<br>User Guide</h2>
+      <p>Unlock FPS &amp; graphics settings for BGMI / PUBG Mobile beyond default limits.</p>
+      <div class="hero-chips">
+        <span class="hero-chip">BGMI</span>
+        <span class="hero-chip">PUBG Global</span>
+        <span class="hero-chip">PUBG KR</span>
+        <span class="hero-chip">PUBG VN</span>
+        <span class="hero-chip">PUBG TW</span>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <section class="section" id="s1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div>
+          <div class="section-title">What is Nex Editor?</div>
+          <div class="section-sub">Overview &amp; purpose</div>
+        </div>
+      </div>
+      <p>Nex Editor is a built-in feature inside <strong>TurboFPS Pro</strong> that lets you unlock and change the FPS and graphics settings of BGMI / PUBG Mobile beyond what the game normally allows.</p>
+      <p>Most phones are locked to 60 FPS or lower inside the game. With Nex Editor, you can push your device to <strong>90 FPS or even 120 FPS</strong> — giving you smoother gameplay and a real competitive advantage.</p>
+      <div class="callout info">
+        <span class="callout-icon">🎮</span>
+        <div class="callout-body">
+          <div class="callout-title">Supported Games</div>
+          <div class="callout-text">BGMI · PUBG Mobile Global · PUBG Mobile KR · PUBG Mobile VN · PUBG Mobile TW</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 -->
+    <section class="section" id="s2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div>
+          <div class="section-title">Requirements</div>
+          <div class="section-sub">Before you begin</div>
+        </div>
+      </div>
+      <p>Before using Nex Editor, make sure the following are in place:</p>
+      <table class="feat-table">
+        <thead><tr><th>Requirement</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Shizuku</td><td>Must be installed and running. Nex Editor uses Shizuku to access game files safely without root.</td></tr>
+          <tr><td>BGMI / PUBG Mobile</td><td>The game must be installed on your device. Nex Editor reads settings from the installed game.</td></tr>
+          <tr><td>TurboFPS Pro</td><td>You need TurboFPS Pro installed. Nex Editor is found inside the app under its own tab.</td></tr>
+          <tr><td>Shizuku Permission</td><td>TurboFPS Pro needs Shizuku permission to load and save your game settings.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">
+          <div class="callout-title">Don't have Shizuku?</div>
+          <div class="callout-text">Download Shizuku for free from the Play Store. Open Shizuku and follow the setup steps. Once it shows <em>"Running"</em>, come back to TurboFPS Pro.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 -->
+    <section class="section" id="s3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div>
+          <div class="section-title">How to Open Nex Editor</div>
+          <div class="section-sub">Navigation inside TurboFPS Pro</div>
+        </div>
+      </div>
+      <ul class="steps">
+        <li><span>Open <strong>TurboFPS Pro</strong> on your phone.</span></li>
+        <li><span>At the bottom navigation, tap the <strong>Nex Editor</strong> tab (looks like a file/editor icon).</span></li>
+        <li><span>The Nex Editor screen will open with tabs at the top: <strong>FPS, Graphics, Style, Profile, Advanced,</strong> and <strong>Presets</strong>.</span></li>
+        <li><span>The app will automatically load the built-in default file. If it says <em>"Open a SAV file to begin"</em>, your game may not be installed or Shizuku may not be running.</span></li>
+      </ul>
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">Important</div>
+          <div class="callout-text">Make sure BGMI / PUBG Mobile is installed before opening Nex Editor. Shizuku must be running in the background for the auto-load to work.</div>
+        </div>
+      </div>
+
+      <div class="tab-pills">
+        <span class="tab-pill">FPS</span>
+        <span class="tab-pill">Graphics</span>
+        <span class="tab-pill">Style</span>
+        <span class="tab-pill">Profile</span>
+        <span class="tab-pill">Advanced</span>
+        <span class="tab-pill">Presets</span>
+      </div>
+    </section>
+
+    <!-- S4 -->
+    <section class="section" id="s4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div>
+          <div class="section-title">Selecting Your Game</div>
+          <div class="section-sub">Choose your PUBG variant</div>
+        </div>
+      </div>
+      <p>At the top of Nex Editor, you will see game chips — one for each supported PUBG variant. Tap the chip that matches the version installed on your phone.</p>
+      <div class="game-chips">
+        <span class="game-chip">🇮🇳 INDIA</span>
+        <span class="game-chip">🌍 GLOBAL</span>
+        <span class="game-chip">🇰🇷 KOREA</span>
+        <span class="game-chip">🇻🇳 VIETNAM</span>
+        <span class="game-chip">🇹🇼 TAIWAN</span>
+      </div>
+      <table class="feat-table">
+        <thead><tr><th>Chip</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>INDIA</td><td>Battlegrounds Mobile India — for Indian players.</td></tr>
+          <tr><td>GLOBAL</td><td>PUBG Mobile Global — international version from Tencent.</td></tr>
+          <tr><td>KOREA</td><td>PUBG Mobile Korean version.</td></tr>
+          <tr><td>VIETNAM</td><td>PUBG Mobile Vietnamese version.</td></tr>
+          <tr><td>TAIWAN</td><td>PUBG Mobile Taiwanese version.</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:14px; color: var(--md-on-surface-variant);">If a game is not installed on your device, tapping its chip will show a message and the chip will bounce back.</p>
+    </section>
+
+    <!-- S5 -->
+    <section class="section" id="s5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div>
+          <div class="section-title">Mode Selector</div>
+          <div class="section-sub">Both / Combat / Lobby</div>
+        </div>
+      </div>
+      <p>Just below the game chips, you will see three buttons: <strong>Both</strong>, <strong>Combat</strong>, and <strong>Lobby</strong>. This controls which game mode your settings apply to.</p>
+      <table class="feat-table">
+        <thead><tr><th>Mode</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Both</td><td>Changes apply to both Battle (Combat) and Lobby at the same time. This is the default and recommended setting.</td></tr>
+          <tr><td>Combat</td><td>Changes only apply to Battle / Combat mode. Your Lobby settings stay the same.</td></tr>
+          <tr><td>Lobby</td><td>Changes only apply to Lobby (main menu area). Battle settings stay untouched.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">Tip</div>
+          <div class="callout-text">Use <strong>Both</strong> mode for quick setup. Use Combat or Lobby separately if you want different FPS or quality for each situation.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 -->
+    <section class="section" id="s6">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div>
+          <div class="section-title">FPS Tab</div>
+          <div class="section-sub">Unlocking frame rate</div>
+        </div>
+      </div>
+      <p>The FPS tab is where you unlock and set the frame rate for your game. This is the <strong>most important tab</strong> in Nex Editor.</p>
+
+      <h3 class="sub-heading">6.1 FPS Presets</h3>
+      <p>You will see 8 preset buttons. Tap any one to instantly set that frame rate.</p>
+      <div class="fps-grid">
+        <div class="fps-chip low"><span class="fps-val">15</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip low"><span class="fps-val">20</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip low"><span class="fps-val">25</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip med"><span class="fps-val">30</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip med"><span class="fps-val">40</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip high"><span class="fps-val">60</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip high"><span class="fps-val">90</span><span class="fps-lbl">FPS</span></div>
+        <div class="fps-chip ultra"><span class="fps-val">120</span><span class="fps-lbl">FPS</span></div>
+      </div>
+      <table class="feat-table">
+        <thead><tr><th>Preset</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td>15 / 20 / 25 FPS</td><td>Very low — good for saving battery on long sessions.</td></tr>
+          <tr><td>30 FPS</td><td>Standard smooth gameplay. Works on almost all devices.</td></tr>
+          <tr><td>40 FPS</td><td>Slightly above standard. Good middle ground.</td></tr>
+          <tr><td>60 FPS</td><td>High frame rate. Most devices can handle this well.</td></tr>
+          <tr><td>90 FPS</td><td>Very smooth. Requires a capable device.</td></tr>
+          <tr><td>120 FPS</td><td>Ultra smooth. Only works well on high-end devices.</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-heading">6.2 Custom FPS Slider</h3>
+      <p>Below the presets, there is a slider you can drag to set a custom FPS value. Use this if none of the presets match exactly what you want.</p>
+
+      <h3 class="sub-heading">6.3 Fine-Tune Switch</h3>
+      <p>There is a Fine-Tune toggle switch below the slider. Turning this <strong>ON</strong> enables custom FPS slider support in the app UI, linked to your current loaded file.</p>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">Device Warning</div>
+          <div class="callout-text">Setting FPS higher than what your device supports can cause overheating or instability. Start with 60 FPS first and test before going to 90 or 120. If the game becomes laggy or crashes, lower the FPS value.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S7 -->
+    <section class="section" id="s7">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div>
+          <div class="section-title">Graphics Tab</div>
+          <div class="section-sub">Visual quality settings</div>
+        </div>
+      </div>
+      <p>The Graphics tab lets you control the visual quality of the game — separately for Battle and Lobby if needed.</p>
+      <table class="feat-table">
+        <thead><tr><th>Feature</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Battle Quality</td><td>Set the render quality during actual matches. Lower = better performance. Higher = better visuals.</td></tr>
+          <tr><td>Lobby Quality</td><td>Set render quality in the lobby / main menu area.</td></tr>
+          <tr><td>Lobby Enhancement Mode</td><td>A toggle switch to reduce lobby visuals for battery saving.</td></tr>
+          <tr><td>Brightness</td><td>A slider to control screen brightness inside the game. Adjust to your comfort.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">Pro Tip</div>
+          <div class="callout-text">For competitive play, <strong>lower Graphics quality + higher FPS</strong> is the better combination. Save battery by reducing Lobby quality since the lobby is not gameplay.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S8 -->
+    <section class="section" id="s8">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div>
+          <div class="section-title">Style Tab</div>
+          <div class="section-sub">Render style &amp; environment look</div>
+        </div>
+      </div>
+      <p>The Style tab controls the visual rendering style of the game — the overall look and color style of the environment. You can set the style separately for <strong>Battle</strong> mode and <strong>Lobby</strong> mode.</p>
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">
+          <div class="callout-title">Note</div>
+          <div class="callout-text">Render style is a visual preference and does not directly affect FPS or performance. Experiment with different styles to see which one you like most.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S9 -->
+    <section class="section" id="s9">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div>
+          <div class="section-title">Profile Tab</div>
+          <div class="section-sub">Advanced game settings</div>
+        </div>
+      </div>
+      <p>The Profile tab contains extra game settings beyond just FPS and graphics.</p>
+      <table class="feat-table">
+        <thead><tr><th>Feature</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Graphic Profile</td><td>Changes default game graphics profile — custom, better FPS, or balanced.</td></tr>
+          <tr><td>Best Quality Battle</td><td>Controls the highest quality setting during Battle mode.</td></tr>
+          <tr><td>Best Quality Lobby</td><td>Controls the highest quality setting in Lobby.</td></tr>
+          <tr><td>Show Combat FPS</td><td>A toggle to show current combat FPS on screen.</td></tr>
+          <tr><td>Gyroscope</td><td>Enable or disable gyroscope aiming assist.</td></tr>
+          <tr><td>Gyro Mode</td><td>Choose which mode gyroscope is active in — all modes, Battle only, etc.</td></tr>
+          <tr><td>Separate Config</td><td>When ON, Battle and Lobby settings are saved independently from each other.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- S10 -->
+    <section class="section" id="s10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div>
+          <div class="section-title">Advanced Tab</div>
+          <div class="section-sub">Power users only</div>
+        </div>
+      </div>
+      <p>The Advanced tab shows all remaining game settings not shown in the other tabs. These are raw setting values from your game file. You can search for a specific setting using the search bar at the top.</p>
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">Caution — Advanced Tab</div>
+          <div class="callout-text">Only change values here if you know exactly what the setting does. Changing unknown values <strong>can break your game settings and require a reinstall</strong>. Stick to the other tabs (FPS, Graphics, Style, Profile) for safe changes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S11 -->
+    <section class="section" id="s11">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div>
+          <div class="section-title">Presets Tab</div>
+          <div class="section-sub">Save your configurations</div>
+        </div>
+      </div>
+      <p>The Presets tab lets you save your current settings as a named preset so you can quickly load them again later.</p>
+      <table class="feat-table">
+        <thead><tr><th>Feature</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Save Preset</td><td>Tap the + button (FAB) to save your current settings with a name.</td></tr>
+          <tr><td>Load Preset</td><td>Tap any saved preset card to apply those settings instantly.</td></tr>
+          <tr><td>Edit / Delete</td><td>Long-press a preset card or tap the edit icon to rename or delete it.</td></tr>
+          <tr><td>Search</td><td>Use the search bar at the top to find a preset by name.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <div class="callout-title">Tip</div>
+          <div class="callout-text">Create multiple presets — for example: <em>"90 FPS Competitive"</em>, <em>"60 FPS Battery Saver"</em>, <em>"Max Quality Lobby"</em>. Switch between them instantly without reconfiguring everything manually.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S12 -->
+    <section class="section" id="s12">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div>
+          <div class="section-title">Applying Your Settings</div>
+          <div class="section-sub">Save &amp; write changes to your game</div>
+        </div>
+      </div>
+      <p>After making changes in any tab, you need to apply them to save them to your game. Look for the floating action button (FAB) in the bottom-right corner of the screen.</p>
+      <div class="fab-grid">
+        <div class="fab-card">
+          <div class="fab-icon">✔️</div>
+          <div class="fab-name">Apply</div>
+          <div class="fab-desc">Writes your changes to the game settings file. Do this after every change.</div>
+        </div>
+        <div class="fab-card">
+          <div class="fab-icon">💾</div>
+          <div class="fab-name">Save</div>
+          <div class="fab-desc">Saves a copy of the current settings file to your phone's storage.</div>
+        </div>
+        <div class="fab-card">
+          <div class="fab-icon">📂</div>
+          <div class="fab-name">Open</div>
+          <div class="fab-desc">Opens file picker to load a SAV file from your internal storage.</div>
+        </div>
+        <div class="fab-card">
+          <div class="fab-icon">📥</div>
+          <div class="fab-name">Import</div>
+          <div class="fab-desc">Import directly from game — no manual file selection needed.</div>
+        </div>
+        <div class="fab-card">
+          <div class="fab-icon">🔄</div>
+          <div class="fab-name">Reset</div>
+          <div class="fab-desc">Resets all settings to game's original defaults. Not available in Beta state.</div>
+        </div>
+      </div>
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <div class="callout-title">Always Apply!</div>
+          <div class="callout-text">Changes are <strong>NOT saved automatically</strong>. After adjusting FPS or any setting, always tap <strong>Apply</strong> to make the changes take effect. Then restart BGMI / PUBG Mobile for the new settings to load in the game.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S13 -->
+    <section class="section" id="s13">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <div>
+          <div class="section-title">Quick Start</div>
+          <div class="section-sub">Unlock FPS in 5 steps</div>
+        </div>
+      </div>
+      <p>Follow these steps to unlock FPS on your device right now:</p>
+      <ul class="steps">
+        <li><span>Make sure <strong>Shizuku is running</strong>. Open the Shizuku app and confirm it shows <em>"Running"</em>.</span></li>
+        <li><span>Open <strong>TurboFPS Pro</strong> and go to the <strong>Nex Editor</strong> tab.</span></li>
+        <li><span>Tap your <strong>game chip</strong> at the top (e.g. BGMI). The settings will load automatically.</span></li>
+        <li><span>Go to the <strong>FPS tab</strong> and tap the FPS preset you want (e.g. 90 for 90 FPS).</span></li>
+        <li><span>Tap <strong>Apply</strong> (the floating button at bottom right). Done — restart BGMI and enjoy!</span></li>
+      </ul>
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <div class="callout-title">You are all set!</div>
+          <div class="callout-text">Your FPS is now unlocked. If you face any issues, try restarting the game and check that Shizuku is still running. For support and updates, visit the official TurboFPS channel on Telegram: <a href="https://t.me/YTTxHuExanOP" style="color:inherit; font-weight:700;">t.me/YTTxHuExanOP</a></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span>TurboFPS Pro — Nex Editor Beta User Guide · Developed by <strong>TheXnOp1</strong></span>
+  <span>For BGMI / PUBG Mobile · All rights reserved</span>
+</footer>
+
+<script>
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(n => n.classList.remove('active'));
+        const active = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+
+  // Smooth scroll
+  navItems.forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(item.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
