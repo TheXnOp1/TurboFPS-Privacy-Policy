@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use – TurboFPS Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #6c63ff;
+      --accent2: #00e5ff;
+      --text: #e2e2f0;
+      --muted: #7a7a9a;
+      --tag-bg: #1a1a2e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      line-height: 1.75;
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+
+    /* hero */
+    .hero {
+      background: linear-gradient(135deg, #0d0d1a 0%, #12122a 60%, #0a0a0f 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 24px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,99,255,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -40px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .app-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 14px 4px 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent2);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .app-badge span.dot {
+      width: 7px; height: 7px;
+      background: var(--accent2);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--accent); }
+
+    .hero-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 16px;
+    }
+
+    /* layout */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* section cards */
+    .section {
+      margin-top: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(90deg, rgba(108,99,255,0.06) 0%, transparent 100%);
+    }
+
+    .section-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .section-body {
+      padding: 20px 24px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #c0c0d8;
+      margin-bottom: 12px;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      list-style: none;
+      margin: 8px 0 12px;
+    }
+    ul li {
+      font-size: 14px;
+      color: #c0c0d8;
+      padding: 6px 0 6px 20px;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    ul li:last-child { border-bottom: none; }
+    ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+      top: 8px;
+    }
+
+    /* tag chips */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--tag-bg);
+      color: var(--muted);
+    }
+    .tag.highlight {
+      border-color: rgba(108,99,255,0.4);
+      color: var(--accent);
+      background: rgba(108,99,255,0.08);
+    }
+    .tag.safe {
+      border-color: rgba(0,229,255,0.3);
+      color: var(--accent2);
+      background: rgba(0,229,255,0.06);
+    }
+    .tag.warn {
+      border-color: rgba(255,160,50,0.4);
+      color: #ffb347;
+      background: rgba(255,160,50,0.07);
+    }
+
+    /* contact block */
+    .contact-block {
+      margin-top: 24px;
+      background: rgba(108,99,255,0.08);
+      border: 1px solid rgba(108,99,255,0.2);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .contact-block p {
+      margin: 0;
+      font-size: 13px;
+    }
+    .contact-block a {
+      color: var(--accent2);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+    }
+    .contact-block a:hover { text-decoration: underline; }
+
+    /* footer */
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      padding: 0 24px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px 36px; }
+      .section-body { padding: 16px 18px; }
+      .section-header { padding: 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="app-badge"><span class="dot"></span> LEGAL DOCUMENT · TERMS OF USE</div>
+      <h1>TurboFPS <span>Pro</span></h1>
+      <p style="color:var(--muted);font-size:14px;margin-top:8px;">
+        Developed by TheXnOp1 &nbsp;·&nbsp; Package: <code style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent2)">com.turbofps</code>
+      </p>
+      <div class="hero-meta">EFFECTIVE DATE: MAY 17, 2026 &nbsp;·&nbsp; LAST UPDATED: MAY 17, 2026</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- 1. Agreement -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <div class="section-title">1. Agreement to These Terms</div>
+      </div>
+      <div class="section-body">
+        <p>
+          These Terms of Use govern your use of <strong>TurboFPS Pro</strong> ("the App", "we", "our"),
+          an Android gaming performance optimization tool developed by <strong>TheXnOp1</strong>.
+        </p>
+        <p>
+          When you first launch the App, you are shown a welcome screen with our Privacy Policy and
+          Terms of Use. By tapping <strong>"I Agree &amp; Continue"</strong>, you confirm that you have
+          read and accepted both documents. If you tap <strong>"Decline &amp; Exit"</strong>, the App
+          closes and you may not use it.
+        </p>
+        <p>
+          Continued use of the App after any update to these Terms means you accept the updated version.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. Who Can Use the App -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">👤</div>
+        <div class="section-title">2. Who Can Use TurboFPS Pro</div>
+      </div>
+      <div class="section-body">
+        <p>
+          You must be at least <strong>13 years old</strong> to use TurboFPS Pro. If you are under 18,
+          you must have your parent or guardian's permission before using the App.
+        </p>
+        <p>
+          By using the App, you confirm that you meet these requirements and that your use complies with
+          all laws applicable in your region.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. What the App Does -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <div class="section-title">3. What TurboFPS Pro Offers</div>
+      </div>
+      <div class="section-body">
+        <p>
+          TurboFPS Pro is a gaming performance toolkit for Android. It is designed to help you get
+          smoother gameplay, better frame rates, and reduced lag — without requiring root access.
+          The App provides the following tools and features:
+        </p>
+
+        <hr class="divider" />
+        <p><strong>Home Screen</strong></p>
+        <ul>
+          <li><strong>Capping Fixer</strong> – Fixes FPS capping issues in BGMI / PUBG Mobile and other games. You choose your device brand and refresh rate, and the App applies the appropriate fix.</li>
+          <li><strong>Runtime Compiler</strong> – Applies game-specific performance profiles to supported titles (BGMI, PUBG Global, Free Fire, Roblox, and more).</li>
+          <li><strong>Turbo Shell</strong> – A terminal screen where you can type and execute ADB commands for advanced device control. Requires Shizuku to be running.</li>
+          <li><strong>Gaming Control</strong> – A set of one-tap gaming tools including background app control, spoofing, animation disabling, GPU rendering, and more (see Section 4).</li>
+          <li><strong>Turbo Addons</strong> – Install, batch install, and backup non-rooted optimization modules powered by TurboFPS Pro.</li>
+          <li><strong>Turbo Tester</strong> – A performance dashboard that reads your device specs (chipset, RAM, refresh rate, temperature, etc.) and lets you export a performance report.</li>
+          <li><strong>Turbo Tips</strong> – Expert gaming tips to help improve your device speed and in-game performance.</li>
+        </ul>
+
+        <hr class="divider" />
+        <p><strong>Fusion Tab</strong></p>
+        <ul>
+          <li><strong>RAM Cleaner</strong> – Shows your Total RAM and Used RAM, and lets you tap Clear to free memory.</li>
+          <li><strong>DNS Changer</strong> – Lets you apply a Custom DNS or Auto DNS to stabilize your connection, and reset it at any time.</li>
+          <li><strong>Basic Optimizations</strong> – Includes toggle switches for Input Latency Optimizer, RAM Booster, and Audio Boost.</li>
+        </ul>
+
+        <hr class="divider" />
+        <p><strong>Nex Editor Tab</strong></p>
+        <ul>
+          <li>A visual graphics settings editor for BGMI / PUBG Mobile. You select your game region (India, Global, Korea, VN, TW, or Mixed) and adjust Frame Rate, Graphics Mode, Style (Color), and Lobby settings through a simple interface — no manual file editing needed.</li>
+        </ul>
+
+        <hr class="divider" />
+        <p><strong>Perf Lab Tab</strong></p>
+        <ul>
+          <li><strong>CPU &amp; GPU Optimization</strong> – Apply a CPU or GPU Governor of your choice for better performance.</li>
+          <li><strong>Per-Game Booster</strong> – Select specific apps, choose a Boost Level and Boost Duration (30 mins / 1 hr / 2 hr / 4 hr), and tap Apply Boost for a targeted performance push.</li>
+          <li><strong>PowerHints Manager</strong> – Enable custom performance hints and Burst Mode for periodic boosts every 8 seconds.</li>
+          <li><strong>Experimental Features</strong> – Additional optimizations such as Multi Renderer, Render Engine Boost, Game Manager, Sensor Acceleration, No Limits Mode, Predictive Rendering, and Sensor Delay tuning. These are labeled experimental because they may not work on every device.</li>
+        </ul>
+
+        <div class="tag-row">
+          <span class="tag highlight">NO ROOT REQUIRED</span>
+          <span class="tag highlight">SHIZUKU POWERED</span>
+          <span class="tag safe">LOCAL DEVICE ONLY</span>
+          <span class="tag safe">NO ACCOUNT NEEDED</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Gaming Control Tools -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🎮</div>
+        <div class="section-title">4. Gaming Control — Your Responsibility</div>
+      </div>
+      <div class="section-body">
+        <p>
+          The <strong>Gaming Control</strong> section contains powerful system-level tools. By using them,
+          you accept full responsibility for the results on your device. These tools include:
+        </p>
+        <ul>
+          <li><strong>Quantum Halt-E</strong> – Halts unused background apps and prevents wakeups.</li>
+          <li><strong>Fake Spoofing</strong> – Simulates a different device profile to unlock hidden system optimizations. Tap <strong>Reset Spoofing</strong> to undo.</li>
+          <li><strong>Force Doze Mode</strong> – Manually toggles Android's Doze Mode for battery or performance control.</li>
+          <li><strong>Back Sync &amp; Auto Updates</strong> – Blocks background sync and auto-updates to reduce lag during gameplay.</li>
+          <li><strong>Block Notifications</strong> – Suppresses all notifications to avoid interruptions during gaming sessions.</li>
+          <li><strong>Disable SafetyCore</strong> – Reduces system load without affecting other apps.</li>
+          <li><strong>Force GPU Rendering</strong> – Forces the GPU to handle all 2D graphics rendering.</li>
+          <li><strong>Turbo Memory Flush</strong> – Clears cached processes and frees unused RAM.</li>
+          <li><strong>Ultra Game Mode</strong> – Enables maximum performance mode with reduced background activity.</li>
+          <li><strong>Monster Mode Override</strong> – Maintains high performance even on low battery. <strong>May drain battery faster.</strong></li>
+          <li><strong>Zero Animation Mode</strong> – Disables system animations for instant app switching.</li>
+          <li><strong>VSYNC Control</strong> – Disables VSYNC wait to reduce input lag.</li>
+        </ul>
+        <p>
+          <strong>Using Fake Spoofing in online games may violate those games' own Terms of Service.</strong>
+          TurboFPS Pro is not responsible for any consequences, including account penalties, resulting
+          from use of these tools.
+        </p>
+      </div>
+    </div>
+
+    <!-- 5. Pro License -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">👑</div>
+        <div class="section-title">5. Pro License</div>
+      </div>
+      <div class="section-body">
+        <p>
+          TurboFPS Pro offers a <strong>Pro License</strong> that removes ads and unlocks exclusive features.
+          To activate it:
+        </p>
+        <ul>
+          <li>Join the <strong>YouTube channel membership</strong> of TheXnOp1.</li>
+          <li>Get your Pro key from the <strong>members-only community post</strong> on YouTube.</li>
+          <li>Open the App, go to <strong>Settings → Pro License</strong>, enter the key, and tap <strong>Activate</strong>.</li>
+        </ul>
+        <p>
+          Pro keys <strong>refresh every 15 days</strong>. You must get the latest key from the community
+          post after each refresh. Keys are personal and non-transferable.
+        </p>
+        <p>
+          Sharing, reselling, or attempting to crack Pro keys is strictly prohibited and will result
+          in permanent revocation. You can remove a key at any time by tapping <strong>Revoke</strong>.
+        </p>
+        <div class="tag-row">
+          <span class="tag highlight">AD-FREE</span>
+          <span class="tag highlight">EXCLUSIVE FEATURES</span>
+          <span class="tag warn">KEY REFRESHES EVERY 15 DAYS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Shizuku -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🔐</div>
+        <div class="section-title">6. Shizuku &amp; System Access</div>
+      </div>
+      <div class="section-body">
+        <p>
+          Many features in TurboFPS Pro require <strong>Shizuku</strong> — a separate third-party app
+          that grants elevated shell access without root. You install and manage Shizuku yourself.
+        </p>
+        <p>
+          By granting TurboFPS Pro access to Shizuku, you understand and accept that:
+        </p>
+        <ul>
+          <li>The App can execute system-level commands on your device.</li>
+          <li>All commands run locally — no data is sent to any server.</li>
+          <li>You are solely responsible for any ADB commands you type and run in <strong>Turbo Shell</strong>.</li>
+          <li>Certain features, especially experimental ones, may behave differently depending on your device model and Android version.</li>
+        </ul>
+        <p>
+          The developer is not liable for any device issues, instability, or data loss caused by the
+          use of system-level features.
+        </p>
+      </div>
+    </div>
+
+    <!-- 7. What You Must Not Do -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🚫</div>
+        <div class="section-title">7. What You Must Not Do</div>
+      </div>
+      <div class="section-body">
+        <p>When using TurboFPS Pro, you agree not to:</p>
+        <ul>
+          <li>Use <strong>Turbo Shell</strong> to execute commands that damage your device or harm third-party services.</li>
+          <li>Share, sell, or distribute Pro license keys.</li>
+          <li>Reverse-engineer, decompile, or create modified versions of the App.</li>
+          <li>Distribute unofficial or cracked versions of TurboFPS Pro.</li>
+          <li>Use the App in any way that violates the laws of your region.</li>
+          <li>Use the App to harm, deceive, or exploit other users or services.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 8. Ads -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📢</div>
+        <div class="section-title">8. Advertisements</div>
+      </div>
+      <div class="section-body">
+        <p>
+          The free version of TurboFPS Pro displays ads served by <strong>Google AdMob</strong>.
+          By using the free version, you consent to AdMob's data practices as described in our
+          Privacy Policy.
+        </p>
+        <p>
+          You can tap <strong>Change Ad Consent</strong> in Settings at any time to update your
+          advertising preferences. Activating a valid Pro License removes all ads for as long as your
+          key is active.
+        </p>
+      </div>
+    </div>
+
+    <!-- 9. Disclaimers -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">⚠️</div>
+        <div class="section-title">9. Disclaimers &amp; Limitation of Liability</div>
+      </div>
+      <div class="section-body">
+        <p>
+          TurboFPS Pro is provided <strong>"as is"</strong>. We do our best to keep the App stable and
+          useful, but we make no guarantees about uninterrupted performance or results on every device.
+        </p>
+        <p>In particular, you use the following features at your own risk:</p>
+        <ul>
+          <li><strong>Experimental Features</strong> in Perf Lab — results vary by device.</li>
+          <li><strong>Monster Mode Override</strong> — may drain battery faster than normal.</li>
+          <li><strong>Turbo Shell</strong> — you are responsible for every command you run.</li>
+          <li><strong>Runtime Compiler (Hardcore Mode)</strong> — labeled risky for a reason; may affect device stability.</li>
+          <li><strong>Fake Spoofing</strong> — may conflict with game anti-cheat systems.</li>
+        </ul>
+        <p>
+          To the fullest extent permitted by law, TheXnOp1 and TurboFPS Pro shall not be liable for
+          any device damage, data loss, game account penalties, or other consequences arising from your
+          use of the App.
+        </p>
+      </div>
+    </div>
+
+    <!-- 10. Intellectual Property -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🛡️</div>
+        <div class="section-title">10. Intellectual Property</div>
+      </div>
+      <div class="section-body">
+        <p>
+          TurboFPS Pro — including its name, logo, all screen designs, feature names (Fusion Engine,
+          Capping Fixer, Nex Editor, Perf Lab, Turbo Shell, Gaming Control, Turbo Addons, Turbo Tester,
+          Turbo Tips, Quantum Halt-E, ZeroLag Mode Pro, and others), and all written content — is the
+          intellectual property of <strong>TheXnOp1</strong>.
+        </p>
+        <p>
+          You receive a limited, personal, non-transferable license to use the App on your own Android
+          device. You do not gain any ownership rights.
+        </p>
+      </div>
+    </div>
+
+    <!-- 11. Changes -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🔄</div>
+        <div class="section-title">11. Changes to These Terms</div>
+      </div>
+      <div class="section-body">
+        <p>
+          We may update these Terms from time to time. The "Last Updated" date at the top of this page
+          will reflect any changes. Continued use of the App after an update means you accept the
+          revised Terms.
+        </p>
+        <p>
+          Major changes will be announced via our Telegram channel:
+          <a href="https://t.me/YTTxHuExanOP" target="_blank" style="color:var(--accent2);font-family:'Space Mono',monospace;font-size:12px;">t.me/YTTxHuExanOP</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- 12. Governing Law -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">⚖️</div>
+        <div class="section-title">12. Governing Law</div>
+      </div>
+      <div class="section-body">
+        <p>
+          These Terms are governed by the laws of <strong>India</strong>, consistent with the developer's
+          jurisdiction. Any disputes arising from your use of TurboFPS Pro shall be handled under
+          applicable Indian law.
+        </p>
+      </div>
+    </div>
+
+    <!-- 13. Contact -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📬</div>
+        <div class="section-title">13. Contact Us</div>
+      </div>
+      <div class="section-body">
+        <p>If you have questions about these Terms, reach out to the developer:</p>
+        <div class="contact-block">
+          <p><strong>Developer:</strong> TheXnOp1</p>
+          <p style="margin-top:8px;"><strong>Telegram:</strong> <a href="https://t.me/YTTxHuExanOP">t.me/YTTxHuExanOP</a></p>
+          <p style="margin-top:4px;"><strong>YouTube:</strong> <a href="https://youtube.com/@TheXnOp1">@TheXnOp1</a></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p style="margin-bottom:6px;">© 2026 TheXnOp1 · TurboFPS Pro · <code>com.turbofps</code></p>
+    <p>This document was written for Google Play Store compliance.</p>
+  </footer>
+
+</body>
+</html>
