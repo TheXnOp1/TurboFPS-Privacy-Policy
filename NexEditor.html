@@ -21,7 +21,6 @@
 html{scroll-behavior:smooth;}
 body{font-family:'Google Sans',sans-serif;background:var(--surface);color:var(--on-surface);min-height:100vh;line-height:1.65;}
 
-/* TOPBAR */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--topbar-h);background:rgba(255,251,254,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--outline-variant);box-shadow:var(--el1);display:flex;align-items:center;gap:14px;padding:0 26px;}
 .topbar-logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#6750A4,#9c27b0);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .topbar-logo svg{width:20px;height:20px;fill:#fff;}
@@ -32,10 +31,8 @@ body{font-family:'Google Sans',sans-serif;background:var(--surface);color:var(--
 .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;background:var(--primary);color:#fff;}
 .chip-out{background:transparent;border:1.5px solid var(--outline-variant);color:var(--on-surface-var);}
 
-/* LAYOUT */
 .layout{display:flex;padding-top:var(--topbar-h);min-height:100vh;}
 
-/* SIDEBAR */
 .sidebar{width:var(--sidebar-w);position:fixed;top:var(--topbar-h);left:0;bottom:0;overflow-y:auto;background:var(--surface);border-right:1px solid var(--outline-variant);padding:18px 10px 40px;}
 .sidebar::-webkit-scrollbar{width:3px;}
 .sidebar::-webkit-scrollbar-thumb{background:var(--outline-variant);border-radius:3px;}
@@ -46,10 +43,8 @@ body{font-family:'Google Sans',sans-serif;background:var(--surface);color:var(--
 .nav-num{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:var(--primary-container);color:var(--on-primary-container);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .14s,color .14s;}
 .nav-item.active .nav-num{background:var(--primary);color:#fff;}
 
-/* MAIN */
 .main{margin-left:var(--sidebar-w);flex:1;padding:42px 50px 100px;max-width:calc(var(--sidebar-w) + 860px);}
 
-/* HERO */
 .hero{background:linear-gradient(135deg,#1a0533 0%,#4a1375 50%,#6750A4 100%);border-radius:24px;padding:50px 44px;color:#fff;margin-bottom:48px;position:relative;overflow:hidden;}
 .hero-glow{position:absolute;border-radius:50%;pointer-events:none;}
 .hero-glow.g1{width:300px;height:300px;top:-80px;right:-60px;background:radial-gradient(circle,rgba(155,114,255,.25) 0%,transparent 65%);}
@@ -62,7 +57,6 @@ body{font-family:'Google Sans',sans-serif;background:var(--surface);color:var(--
 .hero-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;border-radius:20px;background:rgba(255,255,255,.13);color:#fff;font-size:12.5px;font-weight:500;border:1px solid rgba(255,255,255,.2);}
 .hero-badge svg{width:13px;height:13px;fill:rgba(255,255,255,.8);flex-shrink:0;}
 
-/* SECTIONS */
 .section{margin-bottom:48px;animation:fadeUp .32s ease both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(13px);}to{opacity:1;transform:translateY(0);}}
 .section-header{display:flex;align-items:flex-start;gap:15px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--outline-variant);}
@@ -74,9 +68,7 @@ body{font-family:'Google Sans',sans-serif;background:var(--surface);color:var(--
 p{font-size:14.5px;color:var(--on-surface-var);margin-bottom:12px;line-height:1.75;}
 p:last-child{margin-bottom:0;}
 strong{color:var(--on-surface);font-weight:600;}
-code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface-variant);padding:2px 6px;border-radius:5px;color:var(--primary-dim);}
 
-/* TABLES */
 .feat-table{width:100%;border-collapse:collapse;margin-bottom:20px;border-radius:16px;overflow:hidden;box-shadow:var(--el1);}
 .feat-table thead tr{background:var(--primary);}
 .feat-table thead th{color:#fff;font-size:12.5px;font-weight:600;text-align:left;padding:12px 18px;letter-spacing:.4px;}
@@ -87,7 +79,6 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 .feat-table td{padding:11px 18px;font-size:14px;vertical-align:top;line-height:1.6;}
 .feat-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap;}
 
-/* CALLOUTS */
 .callout{border-radius:14px;padding:14px 17px;margin:14px 0;display:flex;gap:12px;align-items:flex-start;}
 .callout-ico{width:32px;height:32px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .callout-ico svg{width:16px;height:16px;}
@@ -106,18 +97,16 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 .callout.success .callout-ico{background:var(--primary);}.callout.success .callout-ico svg{fill:#fff;}
 .callout.success .cl-title,.callout.success .cl-text{color:var(--on-primary-container);}
 
-/* STEPS */
 .steps{list-style:none;margin:14px 0;counter-reset:step;}
 .steps li{counter-increment:step;display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed var(--outline-variant);}
 .steps li:last-child{border-bottom:none;}
 .step-n{width:27px;height:27px;border-radius:50%;flex-shrink:0;background:var(--primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
 .steps li span{font-size:14.5px;line-height:1.7;}
 
-/* FPS BUTTONS */
 .fps-grid{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
 .fps-btn{display:flex;flex-direction:column;align-items:center;padding:10px 16px;border-radius:10px;border:1.5px solid var(--outline-variant);background:#fff;min-width:88px;cursor:default;}
 .fps-btn .fl{font-size:13px;font-weight:700;}
-.fps-btn .fs{font-size:10px;color:var(--on-surface-var);margin-top:2px;font-family:'Roboto Mono',monospace;}
+.fps-btn .fs{font-size:10.5px;color:var(--on-surface-var);margin-top:3px;}
 .fps-btn.c1{border-color:#C8E6C9;background:#F1F8E9;}.fps-btn.c1 .fl{color:#2E7D32;}
 .fps-btn.c2{border-color:#DCEDC8;background:#F9FBE7;}.fps-btn.c2 .fl{color:#558B2F;}
 .fps-btn.c3{border-color:#FFF9C4;background:#FFFDE7;}.fps-btn.c3 .fl{color:#F57F17;}
@@ -127,27 +116,22 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 .fps-btn.c7{border-color:#D1C4E9;background:#EDE7F6;}.fps-btn.c7 .fl{color:#4527A0;}
 .fps-btn.c8{border-color:#CE93D8;background:#F3E5F5;}.fps-btn.c8 .fl{color:#6A1B9A;}
 
-/* GAME CHIPS */
 .game-chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
 .game-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;border:1.5px solid var(--primary);color:var(--primary);background:var(--primary-container);}
 .game-chip svg{width:14px;height:14px;fill:var(--primary);}
 
-/* MODE ROW */
 .mode-row{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;}
 .mode-btn{flex:1;min-width:90px;padding:9px 16px;border-radius:10px;border:1.5px solid var(--outline-variant);background:#fff;text-align:center;font-size:13px;font-weight:600;color:var(--on-surface-var);cursor:default;}
 .mode-btn.on{background:var(--secondary-container);border-color:var(--primary);color:var(--on-primary-container);}
 .mode-btn .md{font-size:11px;font-weight:400;color:var(--on-surface-var);margin-top:2px;display:block;}
 
-/* TAB PILLS */
 .tab-pills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
 .tab-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;background:var(--secondary-container);color:var(--on-primary-container);}
 .tab-pill svg{width:14px;height:14px;fill:var(--on-primary-container);}
 
-/* QUALITY GRID */
 .q-grid{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
 .q-btn{padding:10px 18px;border-radius:10px;border:1.5px solid var(--outline-variant);background:#fff;font-size:13px;font-weight:600;color:var(--on-surface);cursor:default;}
 
-/* BOTTOM ACTION BAR MOCKUP */
 .action-bar{display:flex;align-items:center;background:#fff;border:1.5px solid var(--outline-variant);border-radius:18px;padding:12px 14px;gap:4px;box-shadow:var(--el1);margin:14px 0;}
 .ab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:6px 4px;border-radius:12px;}
 .ab-btn .abi{width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
@@ -157,7 +141,6 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 .ab-fab{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:16px;background:var(--primary);color:#fff;font-size:13px;font-weight:700;margin-left:8px;flex-shrink:0;}
 .ab-fab svg{width:16px;height:16px;fill:#fff;}
 
-/* PRESET CARD */
 .preset-card{background:#fff;border:1.5px solid var(--outline-variant);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:var(--el1);}
 .pc-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
 .pc-info{flex:1;}
@@ -174,7 +157,6 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 .pc-ibtn{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--surface-variant);}
 .pc-ibtn svg{width:14px;height:14px;fill:var(--on-surface-var);}
 
-/* RESET CARDS */
 .reset-grid{display:flex;flex-direction:column;gap:10px;margin:14px 0;}
 .reset-card{display:flex;align-items:flex-start;gap:13px;background:#fff;border:1.5px solid var(--outline-variant);border-radius:14px;padding:14px 18px;box-shadow:var(--el1);}
 .r-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
@@ -184,14 +166,13 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 .r-name{font-size:14px;font-weight:700;color:var(--on-surface);margin-bottom:3px;}
 .r-desc{font-size:13px;color:var(--on-surface-var);line-height:1.6;}
 
-/* PROP ROW */
+/* Advanced tab card mockup */
 .prop-row{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--outline-variant);border-radius:14px;padding:12px 16px;margin-bottom:8px;box-shadow:var(--el1);}
 .prop-key{flex:1;font-size:14px;font-weight:700;color:var(--on-surface);}
-.prop-val{font-size:13px;color:var(--on-surface-var);font-family:'Roboto Mono',monospace;}
+.prop-val{font-size:13px;color:var(--on-surface-var);}
 .prop-edit{width:30px;height:30px;border-radius:8px;background:var(--surface-variant);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .prop-edit svg{width:14px;height:14px;fill:var(--on-surface-var);}
 
-/* FOOTER */
 .footer{margin-left:var(--sidebar-w);padding:22px 50px;border-top:1px solid var(--outline-variant);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--on-surface-var);}
 .footer strong{color:var(--on-surface);}
 
@@ -224,10 +205,8 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <symbol id="i-delete" viewBox="0 0 24 24"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
   <symbol id="i-reset"  viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></symbol>
   <symbol id="i-gyro"   viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm0-12a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/></symbol>
-  <symbol id="i-slider" viewBox="0 0 24 24"><path d="M3 17v2h6v-2zm0-6v2h10v-2zm10 8v2h8v-2zM9 9v2h12V9zm-6 8v-2h6v2zm0-6v-2h4v2z"/></symbol>
 </svg>
 
-<!-- TOP BAR -->
 <header class="topbar">
   <div class="topbar-logo"><svg viewBox="0 0 24 24"><use href="#i-bolt"/></svg></div>
   <span class="topbar-title">TurboFPS Pro</span>
@@ -259,12 +238,11 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
 
 <main class="main">
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-glow g1"></div><div class="hero-glow g2"></div>
-    <div class="hero-eyebrow"><div class="hero-line"></div>TurboFPS Pro · SAV Graphics Editor</div>
+    <div class="hero-eyebrow"><div class="hero-line"></div>TurboFPS Pro · Graphics Settings Editor</div>
     <h2>Nex Editor <span style="opacity:.65;font-size:.65em;font-weight:500;">Beta</span></h2>
-    <p class="hero-desc">Edit your BGMI / PUBG Mobile Active.sav directly — unlock FPS, graphics quality, style, gyroscope, and more. No root required.</p>
+    <p class="hero-desc">Unlock FPS, change graphics quality, style, gyroscope and more in BGMI / PUBG Mobile — without root.</p>
     <div class="hero-badges">
       <span class="hero-badge"><svg viewBox="0 0 24 24"><use href="#i-fps"/></svg>FPS Unlock</span>
       <span class="hero-badge"><svg viewBox="0 0 24 24"><use href="#i-game"/></svg>5 Game Versions</span>
@@ -280,8 +258,8 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
       <div class="section-num">1</div>
       <div><div class="section-title">What is Nex Editor?</div><div class="section-sub">Overview and purpose</div></div>
     </div>
-    <p>Nex Editor is a built-in tab inside TurboFPS Pro that lets you directly read and write the <strong>Active.sav</strong> file used by BGMI and PUBG Mobile. This file stores every graphics and gameplay setting — FPS level, quality, style, brightness, gyroscope mode, and many more properties.</p>
-    <p>Instead of being limited to what the in-game settings screen exposes, Nex Editor lets you change values the game normally hides or caps — like unlocking higher FPS tiers, custom frame rates from 15 to 165, or different quality settings per mode.</p>
+    <p>Nex Editor is a built-in tab inside TurboFPS Pro that lets you change the graphics and gameplay settings of BGMI and PUBG Mobile beyond what the game normally allows — things like unlocking higher FPS, changing visual quality, color style, brightness, and gyroscope behavior.</p>
+    <p>All changes are applied directly to the game. No root is needed. You just import your game's settings, make your changes, and hit Apply.</p>
     <div class="callout info">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg></div>
       <div class="cl-body"><div class="cl-title">Supported Games</div><div class="cl-text">BGMI (India) · PUBG Mobile Global · PUBG Mobile Korea · PUBG Mobile Vietnam · PUBG Mobile Taiwan</div></div>
@@ -297,15 +275,15 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
     <table class="feat-table">
       <thead><tr><th>Requirement</th><th>Why it's needed</th></tr></thead>
       <tbody>
-        <tr><td>Shizuku (running)</td><td>Grants shell access to read and write the game's protected data directory. Must be running before Import or Apply.</td></tr>
-        <tr><td>Game installed</td><td>Required for its chip to be active and for Import from Game to work.</td></tr>
-        <tr><td>TurboFPS Pro</td><td>Nex Editor is a tab inside the app — open the app and navigate to the Nex Editor tab.</td></tr>
-        <tr><td>Game must be closed</td><td>Always fully close the game before importing or applying. An open game locks the file.</td></tr>
+        <tr><td>Shizuku</td><td>Must be installed and running. Nex Editor uses it to read and write your game's settings safely — without root.</td></tr>
+        <tr><td>Your Game Installed</td><td>The game you want to edit (e.g. BGMI) must be installed on your device.</td></tr>
+        <tr><td>TurboFPS Pro</td><td>Nex Editor is a tab inside the app. Open TurboFPS Pro and tap Nex Editor at the bottom.</td></tr>
+        <tr><td>Game Closed</td><td>Always fully close your game before importing or applying settings. If the game is open, it locks its own settings file.</td></tr>
       </tbody>
     </table>
     <div class="callout warn">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-warn"/></svg></div>
-      <div class="cl-body"><div class="cl-title">On First Open</div><div class="cl-text">Nex Editor auto-loads the app's bundled default Active.sav when you open it. Even if Shizuku is not running, the editor still loads and you can make changes — but Import from Game and Apply to Game both require Shizuku.</div></div>
+      <div class="cl-body"><div class="cl-title">First Time Opening</div><div class="cl-text">When you open Nex Editor for the first time, it loads a built-in default settings file automatically so you can explore. You should Import from your game before making real changes to ensure you're editing your actual current settings.</div></div>
     </div>
   </section>
 
@@ -313,14 +291,14 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s3">
     <div class="section-header">
       <div class="section-num">3</div>
-      <div><div class="section-title">Header &amp; Top Buttons</div><div class="section-sub">The two icon buttons in the top-right corner</div></div>
+      <div><div class="section-title">Header &amp; Top Buttons</div><div class="section-sub">Two icon buttons at the top right</div></div>
     </div>
-    <p>At the top of Nex Editor you will see the title <strong>"Nex Editor (Beta)"</strong> with subtitle <em>"SAV Graphics Editor"</em>. Two icon buttons sit on the right:</p>
+    <p>At the top you'll see the title <strong>Nex Editor (Beta)</strong>. Two buttons sit on the right side:</p>
     <table class="feat-table">
       <thead><tr><th>Button</th><th>What it does</th></tr></thead>
       <tbody>
-        <tr><td>Cache Clear (broom icon)</td><td>Opens a dialog listing all 5 game versions. Tap one to clear its cached data via Shizuku shell. Useful after applying changes so the game loads fresh data.</td></tr>
-        <tr><td>Menu ( ⋮ three-dot)</td><td>A popup with extra options — Resolution Changer, Reset (opens Reset Options sheet), Guide link, Settings, and About.</td></tr>
+        <tr><td>Cache Clear</td><td>Clears the cached data for a selected game version. Tap this after applying settings if the game doesn't seem to pick up the changes — it forces the game to reload fresh.</td></tr>
+        <tr><td>Menu ( ⋮ )</td><td>Extra options — Resolution Changer, Reset, Guide, Settings, and About.</td></tr>
       </tbody>
     </table>
   </section>
@@ -329,9 +307,9 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s4">
     <div class="section-header">
       <div class="section-num">4</div>
-      <div><div class="section-title">Game Chips</div><div class="section-sub">Select your installed game version</div></div>
+      <div><div class="section-title">Game Chips</div><div class="section-sub">Tell the app which game you're editing</div></div>
     </div>
-    <p>A horizontally scrollable row of 5 chips sits below the header. Tap the one matching your installed game to set the target for Import and Apply.</p>
+    <p>At the top you'll see a row of chips — one for each supported game version. Tap the one that matches the game installed on your phone. This tells the app which game to import from and apply to.</p>
     <div class="game-chips">
       <span class="game-chip"><svg viewBox="0 0 24 24"><use href="#i-game"/></svg>INDIA</span>
       <span class="game-chip"><svg viewBox="0 0 24 24"><use href="#i-game"/></svg>GLOBAL</span>
@@ -340,18 +318,18 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
       <span class="game-chip"><svg viewBox="0 0 24 24"><use href="#i-game"/></svg>TW</span>
     </div>
     <table class="feat-table">
-      <thead><tr><th>Chip</th><th>Package</th><th>Note</th></tr></thead>
+      <thead><tr><th>Chip</th><th>Game</th></tr></thead>
       <tbody>
-        <tr><td>INDIA</td><td>com.pubg.imobile</td><td>Battlegrounds Mobile India. Default selection.</td></tr>
-        <tr><td>GLOBAL</td><td>com.tencent.ig</td><td>PUBG Mobile Global (Tencent).</td></tr>
-        <tr><td>KOREA</td><td>com.pubg.krmobile</td><td>Korean region version.</td></tr>
-        <tr><td>VN</td><td>com.vng.pubgmobile</td><td>Vietnamese version.</td></tr>
-        <tr><td>TW</td><td>com.rekoo.pubgm</td><td>Taiwanese version.</td></tr>
+        <tr><td>INDIA</td><td>Battlegrounds Mobile India (BGMI)</td></tr>
+        <tr><td>GLOBAL</td><td>PUBG Mobile Global</td></tr>
+        <tr><td>KOREA</td><td>PUBG Mobile Korea</td></tr>
+        <tr><td>VN</td><td>PUBG Mobile Vietnam</td></tr>
+        <tr><td>TW</td><td>PUBG Mobile Taiwan</td></tr>
       </tbody>
     </table>
     <div class="callout info">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Not Installed?</div><div class="cl-text">If a version is not installed, its chip label shows a <strong>✕</strong> suffix and it appears dimmed (55% opacity). Tapping it shows a toast and the chip deselects — at least one chip is always kept checked (falls back to INDIA).</div></div>
+      <div class="cl-body"><div class="cl-title">Game not installed?</div><div class="cl-text">If a game isn't installed on your device, its chip will appear faded and tapping it will show a message. At least one chip is always selected — it falls back to INDIA by default.</div></div>
     </div>
   </section>
 
@@ -359,25 +337,25 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s5">
     <div class="section-header">
       <div class="section-num">5</div>
-      <div><div class="section-title">Mode Selector</div><div class="section-sub">Mixed · Combat · Lobby — controls which SAV properties are written</div></div>
+      <div><div class="section-title">Mode Selector</div><div class="section-sub">Choose whether to edit in-match, lobby, or both</div></div>
     </div>
-    <p>To the right of the game chips row is a compact three-button toggle. This controls which game context your edits apply to.</p>
+    <p>Next to the game chips you'll find three buttons: <strong>Mixed</strong>, <strong>Combat</strong>, and <strong>Lobby</strong>. This controls which part of the game your changes apply to.</p>
     <div class="mode-row">
       <div class="mode-btn on">Mixed<span class="md">Both at once</span></div>
-      <div class="mode-btn">Combat<span class="md">Battle / match only</span></div>
+      <div class="mode-btn">Combat<span class="md">In-match only</span></div>
       <div class="mode-btn">Lobby<span class="md">Main menu only</span></div>
     </div>
     <table class="feat-table">
-      <thead><tr><th>Mode</th><th>Properties written</th></tr></thead>
+      <thead><tr><th>Mode</th><th>What gets changed</th></tr></thead>
       <tbody>
-        <tr><td>Mixed</td><td>FPS writes to <code>FPSLevel</code>, <code>BattleFPS</code>, <code>LobbyFPS</code>, <code>MainCityFPS</code>. Quality/style writes to both Battle and Lobby keys. Recommended default.</td></tr>
-        <tr><td>Combat</td><td>FPS writes to <code>BattleFPS</code> + <code>MainCityFPS</code>. Quality writes to <code>BattleRenderQuality</code>. Style writes to <code>BattleRenderStyle</code>.</td></tr>
-        <tr><td>Lobby</td><td>FPS writes to <code>LobbyFPS</code> + <code>MainCityFPS</code>. Quality writes to <code>LobbyRenderQuality</code>. Style writes to <code>LobbyRenderStyle</code>.</td></tr>
+        <tr><td>Mixed</td><td>Your changes apply to both the in-match experience and the lobby at the same time. This is the recommended mode for most users.</td></tr>
+        <tr><td>Combat</td><td>Only your in-match (battle) settings change. The lobby looks exactly the same as before.</td></tr>
+        <tr><td>Lobby</td><td>Only your lobby (main menu) settings change. In-match settings stay untouched.</td></tr>
       </tbody>
     </table>
     <div class="callout tip">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-tip"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Custom Style (Separate Config)</div><div class="cl-text">The <strong>Custom Style (Color)</strong> switch in the FPS &amp; Graphics tab enables <code>HasGraphicsSeparateConfig</code>. When ON, Combat and Lobby style are independent — use Combat/Lobby mode to set them differently. When turned OFF, Lobby style automatically syncs to match Combat.</div></div>
+      <div class="cl-body"><div class="cl-title">Want different styles for match vs lobby?</div><div class="cl-text">Turn on the <strong>Custom Style (Color)</strong> switch in the FPS &amp; Graphics tab. Then use Combat mode to set one color style and Lobby mode to set a different one. When this switch is off, both stay the same.</div></div>
     </div>
   </section>
 
@@ -385,7 +363,7 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s6">
     <div class="section-header">
       <div class="section-num">6</div>
-      <div><div class="section-title">Tabs Overview</div><div class="section-sub">Three tabs, each with a distinct purpose</div></div>
+      <div><div class="section-title">Tabs Overview</div><div class="section-sub">Three tabs at the top of the editor</div></div>
     </div>
     <div class="tab-pills">
       <span class="tab-pill"><svg viewBox="0 0 24 24"><use href="#i-fps"/></svg>FPS &amp; Graphics</span>
@@ -393,11 +371,11 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
       <span class="tab-pill"><svg viewBox="0 0 24 24"><use href="#i-preset"/></svg>Presets</span>
     </div>
     <table class="feat-table">
-      <thead><tr><th>Tab</th><th>Contents</th></tr></thead>
+      <thead><tr><th>Tab</th><th>What's inside</th></tr></thead>
       <tbody>
-        <tr><td>FPS &amp; Graphics</td><td>Frame Rate presets, Custom FPS slider (15–165), Graphics Quality, Style (Color), Lobby Enhancement, Brightness slider, Graphics Preference / Profile dropdown, Best Quality dropdown, Show Combat FPS switch, Custom Style switch, and Gyroscope. All in one long scrollable page.</td></tr>
-        <tr><td>Advanced</td><td>Searchable raw list of all SAV properties. Edit any value directly. Long-press any card to delete that property from the file.</td></tr>
-        <tr><td>Presets</td><td>Searchable preset library. Top section: 4 built-in Recommended presets. Bottom section: your saved custom presets with Load, Edit, and Delete controls.</td></tr>
+        <tr><td>FPS &amp; Graphics</td><td>All the main settings — frame rate, graphics quality, color style, lobby enhancement, brightness, graphics profile, gyroscope. This is where most users spend their time.</td></tr>
+        <tr><td>Advanced</td><td>A full list of every setting inside your game file. For users who want to tweak specific values manually.</td></tr>
+        <tr><td>Presets</td><td>Ready-made configurations you can load instantly. Includes built-in recommended presets and your own saved presets.</td></tr>
       </tbody>
     </table>
   </section>
@@ -406,132 +384,137 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s7">
     <div class="section-header">
       <div class="section-num">7</div>
-      <div><div class="section-title">FPS &amp; Graphics Tab</div><div class="section-sub">All visual and frame-rate settings — one scrollable page</div></div>
+      <div><div class="section-title">FPS &amp; Graphics Tab</div><div class="section-sub">Your main settings — all in one scrollable page</div></div>
     </div>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>7.1 Frame Rate Settings</div>
-    <p>Eight horizontally scrollable preset buttons. These map to the game's internal <code>FPSLevel</code> integer (1–8). Tapping one also writes to <code>BattleFPS</code> / <code>LobbyFPS</code> / <code>MainCityFPS</code> based on the current Mode.</p>
+    <div class="sub-h"><div class="sub-h-bar"></div>7.1 Frame Rate</div>
+    <p>Tap one of the eight preset buttons to set your desired frame rate. The selected one gets highlighted.</p>
     <div class="fps-grid">
-      <div class="fps-btn c1"><span class="fl">15 FPS</span><span class="fs">Level 1</span></div>
-      <div class="fps-btn c2"><span class="fl">Power Saving</span><span class="fs">Level 2</span></div>
-      <div class="fps-btn c3"><span class="fl">Medium</span><span class="fs">Level 3</span></div>
-      <div class="fps-btn c4"><span class="fl">High</span><span class="fs">Level 4</span></div>
-      <div class="fps-btn c5"><span class="fl">Ultra</span><span class="fs">Level 5</span></div>
-      <div class="fps-btn c6"><span class="fl">Extreme</span><span class="fs">Level 6</span></div>
-      <div class="fps-btn c7"><span class="fl">Extreme+</span><span class="fs">Level 7</span></div>
-      <div class="fps-btn c8"><span class="fl">Ultra Extreme</span><span class="fs">Level 8</span></div>
+      <div class="fps-btn c1"><span class="fl">15 FPS</span><span class="fs">Very low</span></div>
+      <div class="fps-btn c2"><span class="fl">Power Saving</span><span class="fs">Light usage</span></div>
+      <div class="fps-btn c3"><span class="fl">Medium</span><span class="fs">Standard</span></div>
+      <div class="fps-btn c4"><span class="fl">High</span><span class="fs">30 FPS</span></div>
+      <div class="fps-btn c5"><span class="fl">Ultra</span><span class="fs">40 FPS</span></div>
+      <div class="fps-btn c6"><span class="fl">Extreme</span><span class="fs">60 FPS</span></div>
+      <div class="fps-btn c7"><span class="fl">Extreme+</span><span class="fs">90 FPS</span></div>
+      <div class="fps-btn c8"><span class="fl">Ultra Extreme</span><span class="fs">120 FPS</span></div>
+    </div>
+    <div class="callout warn">
+      <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-warn"/></svg></div>
+      <div class="cl-body"><div class="cl-title">Match your screen's refresh rate</div><div class="cl-text">There's no benefit to setting 120 FPS if your phone screen only supports 60 Hz — it won't feel any smoother. Check your phone's display settings to see the maximum supported refresh rate and match your FPS to it.</div></div>
     </div>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>7.2 Custom Frame Rates (Fine-Tune Card)</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>7.2 Custom Frame Rate (Fine-Tune)</div>
+    <p>If the presets don't match exactly what you need, use the <strong>Fine-Tune</strong> option. Turn on the Fine-Tune switch, then drag the slider to pick any specific frame rate between <strong>15 and 165</strong>. The slider is disabled when the switch is off.</p>
+
+    <div class="sub-h"><div class="sub-h-bar"></div>7.3 Graphics Quality</div>
+    <p>Six quality options from lowest to highest. Choose based on what your device can handle smoothly.</p>
+    <div class="q-grid">
+      <div class="q-btn">Super Smooth</div>
+      <div class="q-btn">Smooth</div>
+      <div class="q-btn">Balanced</div>
+      <div class="q-btn">HD</div>
+      <div class="q-btn">HDR</div>
+      <div class="q-btn">Ultra HDR</div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-tip"/></svg></div>
+      <div class="cl-body"><div class="cl-title">Competitive tip</div><div class="cl-text">For competitive gaming, lower quality + higher FPS is usually better. Save the fancy visuals for casual sessions.</div></div>
+    </div>
+
+    <div class="sub-h"><div class="sub-h-bar"></div>7.4 Color Style</div>
+    <p>Five visual color styles for the game environment. Pick whichever looks best to you — this is purely a visual preference and does not affect performance.</p>
+    <div class="q-grid">
+      <div class="q-btn">Classic</div>
+      <div class="q-btn">Colorful</div>
+      <div class="q-btn">Realistic</div>
+      <div class="q-btn">Soft</div>
+      <div class="q-btn">Movie</div>
+    </div>
+
+    <div class="sub-h"><div class="sub-h-bar"></div>7.5 Lobby Enhancement &amp; Brightness</div>
     <table class="feat-table">
       <thead><tr><th>Control</th><th>What it does</th></tr></thead>
       <tbody>
-        <tr><td>Fine-Tune switch</td><td>When ON, sets <code>FPSFineTuneSwitch = true</code> so the game reads <code>FPSFineTuneNum</code> instead of the preset level.</td></tr>
-        <tr><td>FPS Slider</td><td>Drag to any integer from <strong>15 to 165</strong>. Writes to <code>FPSFineTuneNum</code>. Disabled when switch is OFF.</td></tr>
+        <tr><td>Lobby Enhancement switch</td><td>When turned ON, improves the visual quality of the main menu — better lighting, higher resolution effects, and improved special effects in the lobby. Has no effect during matches.</td></tr>
+        <tr><td>Brightness slider</td><td>Adjusts the in-game screen brightness from 50% (dim) to 300% (very bright). Drag to your preference — the current value shows to the right of the slider.</td></tr>
       </tbody>
     </table>
-    <div class="callout warn">
-      <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-warn"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Match your display refresh rate</div><div class="cl-text">Setting 120 FPS on a 60 Hz screen gives no benefit — the display can't show more than 60 frames. Match the FPS value to your screen's actual refresh rate for best results.</div></div>
-    </div>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>7.3 Graphics Settings (Quality)</div>
-    <p>Six horizontally scrollable quality buttons. Write to <code>BattleRenderQuality</code> and/or <code>LobbyRenderQuality</code> depending on Mode.</p>
-    <div class="q-grid">
-      <div class="q-btn">Super Smooth</div><div class="q-btn">Smooth</div>
-      <div class="q-btn">Balanced</div><div class="q-btn">HD</div>
-      <div class="q-btn">HDR</div><div class="q-btn">Ultra HDR</div>
-    </div>
-
-    <div class="sub-h"><div class="sub-h-bar"></div>7.4 Style (Color)</div>
-    <p>Five color style buttons. Write to <code>BattleRenderStyle</code> and/or <code>LobbyRenderStyle</code> depending on Mode.</p>
-    <div class="q-grid">
-      <div class="q-btn">Classic</div><div class="q-btn">Colorful</div>
-      <div class="q-btn">Realistic</div><div class="q-btn">Soft</div><div class="q-btn">Movie</div>
-    </div>
-
-    <div class="sub-h"><div class="sub-h-bar"></div>7.5 Lobby Graphics Enhancement + Brightness Card</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>7.6 Graphics Profile</div>
+    <p>A dropdown that selects the game's built-in performance profile. Choose one based on your priority:</p>
     <table class="feat-table">
-      <thead><tr><th>Control</th><th>SAV property</th><th>What it does</th></tr></thead>
+      <thead><tr><th>Option</th><th>Best for</th></tr></thead>
       <tbody>
-        <tr><td>Lobby Enhancement switch</td><td>nEnhancedLobbyQuality</td><td>ON = 1 (enhanced lobby visuals, resolution, and special effects). OFF = 0.</td></tr>
-        <tr><td>Brightness slider</td><td>ScreenLightness (float)</td><td>Range 50%–300%. Maps slider % ÷ 100 to a float (e.g. 150% → 1.5). Controls in-game screen brightness.</td></tr>
+        <tr><td>Better Graphics</td><td>You want the best visuals and don't mind slightly lower FPS.</td></tr>
+        <tr><td>Balanced</td><td>A middle ground between visuals and performance.</td></tr>
+        <tr><td>Better Frame Rate</td><td>You want the smoothest gameplay possible.</td></tr>
+        <tr><td>Custom</td><td>You're managing all settings manually.</td></tr>
+        <tr><td>Combat FPS</td><td>Same as toggling the Show Combat FPS switch — unlocks the game's combat-specific FPS mode.</td></tr>
       </tbody>
     </table>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>7.6 Graphics Preference (Profile Dropdown)</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>7.7 Best Quality</div>
+    <p>A second dropdown that sets the visual quality ceiling for whichever profile you selected above. Uses the same six quality options (Super Smooth → Ultra HDR). This ensures the game doesn't exceed a quality level you're not comfortable with.</p>
+
+    <div class="sub-h"><div class="sub-h-bar"></div>7.8 Switches</div>
     <table class="feat-table">
-      <thead><tr><th>Option</th><th>GraphicFavor value</th></tr></thead>
+      <thead><tr><th>Switch</th><th>What it does</th></tr></thead>
       <tbody>
-        <tr><td>Better Graphics</td><td>1</td></tr>
-        <tr><td>Balanced</td><td>2</td></tr>
-        <tr><td>Better Frame Rate</td><td>3</td></tr>
-        <tr><td>Custom</td><td>4</td></tr>
-        <tr><td>Combat FPS</td><td>5 — also set by the Show Combat FPS switch</td></tr>
+        <tr><td>Show Combat FPS</td><td>Activates the game's dedicated combat FPS mode. When this is on, the game's own graphics settings screen will show a special combat-only FPS option.</td></tr>
+        <tr><td>Custom Style (Color)</td><td>When ON, lets you set a different color style for in-match vs lobby separately. When OFF, both use the same style automatically.</td></tr>
       </tbody>
     </table>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>7.7 Best Quality Dropdown</div>
-    <p>A second dropdown below the Profile spinner. Sets the quality ceiling for the active profile. Same 6 options as the quality button row (Super Smooth → Ultra HDR). Writes to <code>GFBestQBattle</code> and/or <code>GFBestQLobby</code> based on Mode.</p>
-
-    <div class="sub-h"><div class="sub-h-bar"></div>7.8 Switches Card</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>7.9 Gyroscope</div>
+    <p>Controls whether and when the gyroscope is used for aiming. Toggle the main switch ON or OFF first. If ON, choose a mode:</p>
     <table class="feat-table">
-      <thead><tr><th>Switch</th><th>SAV property</th><th>Effect</th></tr></thead>
+      <thead><tr><th>Mode</th><th>When it's active</th></tr></thead>
       <tbody>
-        <tr><td>Show Combat FPS (Graphics)</td><td>GraphicFavor = 5</td><td>Activates Combat FPS profile mode, removing the standard graphics profile and showing combat-only unlocked FPS in game graphics settings.</td></tr>
-        <tr><td>Custom Style (Color)</td><td>HasGraphicsSeparateConfig</td><td>ON = Combat and Lobby style values are independent. OFF = Lobby style is auto-synced to match Combat style.</td></tr>
+        <tr><td>Always On</td><td>Gyroscope works all the time during gameplay.</td></tr>
+        <tr><td>Scope Only</td><td>Gyroscope activates only when you're aiming through a scope.</td></tr>
+        <tr><td>While Firing</td><td>Gyroscope activates only while you're holding the fire button.</td></tr>
       </tbody>
     </table>
-
-    <div class="sub-h"><div class="sub-h-bar"></div>7.9 Gyroscope Card</div>
-    <table class="feat-table">
-      <thead><tr><th>Control</th><th>Gyroscope value</th></tr></thead>
-      <tbody>
-        <tr><td>Gyroscope switch OFF</td><td>0 — disabled completely</td></tr>
-        <tr><td>Always On</td><td>1 — gyro active at all times</td></tr>
-        <tr><td>Scope Only</td><td>2 — active when aiming through a scope</td></tr>
-        <tr><td>While Firing</td><td>3 — active only when fire button is held</td></tr>
-      </tbody>
-    </table>
-    <p>The mode buttons (Always On / Scope Only / While Firing) appear only when the gyroscope switch is ON.</p>
   </section>
 
   <!-- S8 -->
   <section class="section" id="s8">
     <div class="section-header">
       <div class="section-num">8</div>
-      <div><div class="section-title">Advanced Tab</div><div class="section-sub">Raw SAV property editor with search and delete</div></div>
+      <div><div class="section-title">Advanced Tab</div><div class="section-sub">For users who want to go deeper</div></div>
     </div>
-    <p>Shows every readable property in the loaded SAV. Known properties (FPSLevel, BattleRenderQuality, etc.) appear first in a fixed order. All remaining properties follow.</p>
+    <p>The Advanced tab shows a full list of every setting inside your game's file. Think of it as a complete settings panel where nothing is hidden. Most users won't need to touch this — the FPS &amp; Graphics tab covers the important ones — but it's here if you want more control.</p>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>8.1 Search Bar</div>
-    <p>Filters the list in real time by property name. A count label below shows how many results match — e.g. <strong>"32 settings"</strong>. An empty state message appears if nothing matches.</p>
+    <div class="sub-h"><div class="sub-h-bar"></div>8.1 Search</div>
+    <p>Type in the search bar at the top to filter the list by name. A count below shows how many settings are visible. If nothing matches, an empty state message appears.</p>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>8.2 Property Cards — Two Types</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>8.2 How to Edit a Setting</div>
+    <p>Each setting appears as a card showing its name and current value. There are two types:</p>
     <div class="prop-row">
-      <div class="prop-key">FPSLevel</div>
-      <div class="prop-val">Extreme+ (7)</div>
+      <div class="prop-key">Frame Rate Level</div>
+      <div class="prop-val">Extreme+ (90 FPS)</div>
       <div class="prop-edit"><svg viewBox="0 0 24 24"><use href="#i-edit"/></svg></div>
     </div>
     <div class="prop-row">
-      <div class="prop-key">FPSFineTuneSwitch</div>
+      <div class="prop-key">Fine-Tune Enabled</div>
       <div style="flex:1;"></div>
       <div style="width:44px;height:24px;border-radius:12px;background:var(--primary);display:flex;align-items:center;padding:2px;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;margin-left:auto;"></div></div>
     </div>
     <table class="feat-table" style="margin-top:12px;">
       <thead><tr><th>Card type</th><th>How to edit</th></tr></thead>
       <tbody>
-        <tr><td>Value card (Int / Float / String)</td><td>Tap the card or edit icon. For labeled properties (FPSLevel, Gyroscope, etc.) a radio list with human-readable options appears. For others, a text input appears. Range validation is enforced for known fields (e.g. FPSFineTuneNum must be 15–165).</td></tr>
-        <tr><td>Bool card (True/False)</td><td>A toggle switch is shown inline — flip it directly, no sheet needed.</td></tr>
+        <tr><td>Value setting</td><td>Tap the card or the edit icon. A sheet opens where you pick from a list of options (for settings with fixed choices) or type in a value manually.</td></tr>
+        <tr><td>On/Off setting</td><td>A toggle switch is shown right on the card — flip it directly without opening anything.</td></tr>
       </tbody>
     </table>
     <div class="callout warn">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-warn"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Long-press to Delete</div><div class="cl-text">Long-pressing any property card opens a Delete Property confirmation sheet. Deleting removes the property permanently from the SAV — the game regenerates a default on next launch. Use Reset App Changes to undo before applying.</div></div>
+      <div class="cl-body"><div class="cl-title">Long-press to remove a setting</div><div class="cl-text">Long-pressing a card opens a confirmation to remove that setting from the file entirely. The game will regenerate a default value for it the next time it starts. Only do this if you know what you're removing — it can't be undone from the editor (use Reset App Changes to recover).</div></div>
     </div>
     <div class="callout info">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-info"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Two-way sync</div><div class="cl-text">Changes in Advanced instantly update the FPS &amp; Graphics tab controls, and vice versa. Both views always reflect the same underlying data.</div></div>
+      <div class="cl-body"><div class="cl-title">Stays in sync</div><div class="cl-text">Whatever you change here is immediately reflected in the FPS &amp; Graphics tab, and vice versa. Both tabs always show the same data.</div></div>
     </div>
   </section>
 
@@ -539,17 +522,17 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s9">
     <div class="section-header">
       <div class="section-num">9</div>
-      <div><div class="section-title">Presets Tab</div><div class="section-sub">RECOMMENDED + MY PRESETS sections</div></div>
+      <div><div class="section-title">Presets Tab</div><div class="section-sub">Load ready-made configs or save your own</div></div>
     </div>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>9.1 Built-in Recommended Presets</div>
-    <p>Four read-only presets are always available. They cannot be edited or deleted.</p>
+    <div class="sub-h"><div class="sub-h-bar"></div>9.1 Recommended Presets</div>
+    <p>Four built-in presets are always available at the top. You can't edit or delete them. Tap <strong>Load</strong> on any one to instantly apply that config to the editor.</p>
     <div class="preset-card">
       <div class="pc-top">
         <div class="pc-info">
           <div class="pc-name">Higher Frame Rates</div>
-          <div class="pc-desc">120 FPS Unlocked with smooth graphics. Less detailing.</div>
-          <div class="pc-date">Created 08 May 2026</div>
+          <div class="pc-desc">120 FPS unlocked with smooth graphics. Less visual detail, maximum smoothness.</div>
+          <div class="pc-date">Built-in · 08 May 2026</div>
         </div>
         <div class="pc-load"><svg viewBox="0 0 24 24"><use href="#i-import"/></svg>Load</div>
       </div>
@@ -557,22 +540,23 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
       <div class="pc-bottom"><div class="pc-stats"><div class="pc-sl">Ultra Extreme · Smooth · Classic</div><div class="pc-gl">All Versions</div></div></div>
     </div>
     <table class="feat-table">
-      <thead><tr><th>Preset</th><th>FPS Level</th><th>Quality</th><th>Style</th></tr></thead>
+      <thead><tr><th>Preset</th><th>Great for</th></tr></thead>
       <tbody>
-        <tr><td>Higher Frame Rates</td><td>Ultra Extreme (8 · 120 FPS)</td><td>Smooth</td><td>Classic</td></tr>
-        <tr><td>Ultra HDR Graphics</td><td>Extreme+ (7 · 90 FPS)</td><td>Ultra HDR</td><td>Movie</td></tr>
-        <tr><td>Balanced Graphics</td><td>Extreme (6 · 60 FPS)</td><td>HDR</td><td>Colorful</td></tr>
-        <tr><td>Battery Saving</td><td>Ultra (5 · 40 FPS)</td><td>Super Smooth</td><td>Soft</td></tr>
+        <tr><td>Higher Frame Rates</td><td>Players who want the smoothest possible gameplay. 120 FPS, lightweight graphics.</td></tr>
+        <tr><td>Ultra HDR Graphics</td><td>Players who want beautiful visuals at a high but manageable frame rate (90 FPS).</td></tr>
+        <tr><td>Balanced Graphics</td><td>The sweet spot — good visuals and solid 60 FPS performance.</td></tr>
+        <tr><td>Battery Saving</td><td>Long sessions where you want to preserve battery. Lower FPS, lightest graphics.</td></tr>
       </tbody>
     </table>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>9.2 My Presets (Custom)</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>9.2 Your Saved Presets</div>
+    <p>Any configs you save appear here, sorted newest first. Each preset card shows the name, description, when it was created, and which games it supports.</p>
     <div class="preset-card">
       <div class="pc-top">
         <div class="pc-info">
           <div class="pc-name">My Competitive Setup</div>
           <div class="pc-desc">90 FPS with balanced visual quality</div>
-          <div class="pc-date">Created 12 May 2026</div>
+          <div class="pc-date">Saved 12 May 2026</div>
         </div>
         <div class="pc-load"><svg viewBox="0 0 24 24"><use href="#i-import"/></svg>Load</div>
       </div>
@@ -583,23 +567,23 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
         <div class="pc-ibtn"><svg viewBox="0 0 24 24"><use href="#i-delete"/></svg></div>
       </div>
     </div>
-    <p>Tapping <strong>Load</strong> on a custom preset opens a sheet with two choices:</p>
+    <p>When you tap <strong>Load</strong> on one of your presets, you'll get two choices:</p>
     <table class="feat-table">
       <thead><tr><th>Option</th><th>What happens</th></tr></thead>
       <tbody>
-        <tr><td>Load to Editor</td><td>Loads the preset's SAV bytes into the editor. You can then review and edit further before applying.</td></tr>
-        <tr><td>Apply Directly</td><td>Loads the preset and immediately writes it to the game via Shizuku. A rewarded ad plays for free users; Pro users skip.</td></tr>
+        <tr><td>Load to Editor</td><td>Opens the preset in the editor so you can review or tweak it before applying to the game.</td></tr>
+        <tr><td>Apply Directly</td><td>Loads the preset and immediately writes it to your game. Fastest way to switch configs.</td></tr>
       </tbody>
     </table>
-    <p>The <strong>edit icon</strong> lets you rename, update the description, and change supported game chips. The <strong>delete icon</strong> removes it after a confirmation dialog. Presets are sorted newest first.</p>
+    <p>Use the <strong>edit icon</strong> to rename your preset or change which games it supports. Use the <strong>delete icon</strong> to remove it (a confirmation is shown first).</p>
 
-    <div class="sub-h"><div class="sub-h-bar"></div>9.3 Saving a New Custom Preset</div>
+    <div class="sub-h"><div class="sub-h-bar"></div>9.3 Saving a New Preset</div>
     <ul class="steps">
-      <li><div class="step-n">1</div><span>Make your desired changes in the FPS &amp; Graphics tab.</span></li>
-      <li><div class="step-n">2</div><span>Tap <strong>Preset</strong> in the bottom action bar.</span></li>
-      <li><div class="step-n">3</div><span>Enter a preset name and optional description.</span></li>
-      <li><div class="step-n">4</div><span>Select which game versions it applies to using the chips.</span></li>
-      <li><div class="step-n">5</div><span>Tap <strong>Save</strong>. The preset appears in MY PRESETS sorted newest first.</span></li>
+      <li><div class="step-n">1</div><span>Set up your desired settings in the FPS &amp; Graphics tab.</span></li>
+      <li><div class="step-n">2</div><span>Tap the <strong>Preset</strong> button in the bottom action bar.</span></li>
+      <li><div class="step-n">3</div><span>Give it a name and optional description.</span></li>
+      <li><div class="step-n">4</div><span>Select which game versions this preset works for.</span></li>
+      <li><div class="step-n">5</div><span>Tap <strong>Save</strong> — your preset appears in My Presets immediately.</span></li>
     </ul>
   </section>
 
@@ -607,9 +591,9 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s10">
     <div class="section-header">
       <div class="section-num">10</div>
-      <div><div class="section-title">Bottom Action Bar</div><div class="section-sub">Five file operations + the Apply FAB</div></div>
+      <div><div class="section-title">Bottom Action Bar</div><div class="section-sub">Five buttons + the Apply button</div></div>
     </div>
-    <p>A persistent bar at the bottom of the screen. It hides when you scroll down and reappears when you scroll up.</p>
+    <p>A bar at the bottom of the screen gives you all the file controls you need. It hides when you scroll down and comes back when you scroll up.</p>
     <div class="action-bar">
       <div class="ab-btn"><div class="abi"><svg viewBox="0 0 24 24"><use href="#i-open"/></svg></div><div class="abl">Open</div></div>
       <div class="ab-btn"><div class="abi"><svg viewBox="0 0 24 24"><use href="#i-import"/></svg></div><div class="abl">Import</div></div>
@@ -622,12 +606,12 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
     <table class="feat-table">
       <thead><tr><th>Button</th><th>What it does</th></tr></thead>
       <tbody>
-        <tr><td>Open</td><td>Opens the system file picker. Select any <code>.sav</code> file from storage to load into the editor.</td></tr>
-        <tr><td>Import</td><td>Opens the Import from Game sheet (India / Global / Korea / Vietnam / Taiwan). Tap a version to read its Active.sav via Shizuku. Game must be closed.</td></tr>
-        <tr><td>Default</td><td>Loads the app's bundled default Active.sav. A confirmation warns that unsaved changes will be lost.</td></tr>
-        <tr><td>Save</td><td>Saves the current SAV as a <code>.zip</code> to <code>Downloads/TurboFPS_Pro/Sav_Files/</code>. Good for backup before applying.</td></tr>
-        <tr><td>Preset</td><td>Opens the Save Preset sheet to save the current config as a named custom preset.</td></tr>
-        <tr><td>Apply (FAB)</td><td>Writes the current SAV to the selected game's directory via Shizuku. See Section 11.</td></tr>
+        <tr><td>Open</td><td>Opens a file picker so you can load a settings file you've saved on your phone previously.</td></tr>
+        <tr><td>Import</td><td>Reads your game's current settings directly from the game. This is the recommended way to start — it loads exactly what your game is using right now. Game must be closed first.</td></tr>
+        <tr><td>Default</td><td>Loads the app's built-in default settings file. Useful as a starting point if you want to start fresh. A warning is shown that your current unsaved edits will be lost.</td></tr>
+        <tr><td>Save</td><td>Saves your current settings as a backup file on your phone (in Downloads/TurboFPS_Pro/Sav_Files). Good habit before applying a major change.</td></tr>
+        <tr><td>Preset</td><td>Saves your current settings as a named preset in My Presets so you can reload them later.</td></tr>
+        <tr><td>Apply</td><td>Writes your changes to the game. This is the button that actually makes everything take effect. See Section 11.</td></tr>
       </tbody>
     </table>
   </section>
@@ -636,24 +620,24 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s11">
     <div class="section-header">
       <div class="section-num">11</div>
-      <div><div class="section-title">Applying Settings to Your Game</div><div class="section-sub">The full Apply flow step by step</div></div>
+      <div><div class="section-title">Applying Settings to Your Game</div><div class="section-sub">How to make your changes actually take effect</div></div>
     </div>
     <ul class="steps">
       <li><div class="step-n">1</div><span>Make your changes in the FPS &amp; Graphics tab.</span></li>
-      <li><div class="step-n">2</div><span>Confirm the correct <strong>game chip</strong> is selected (e.g. INDIA for BGMI).</span></li>
-      <li><div class="step-n">3</div><span><strong>Fully close the game</strong> — force-stop it from Recent Apps.</span></li>
-      <li><div class="step-n">4</div><span>Tap the <strong>Apply</strong> FAB. A dialog appears: <em>"Apply to [Game]? Make sure [Game] is fully closed."</em></span></li>
-      <li><div class="step-n">5</div><span>Tap <strong>Apply</strong> in the dialog. Free users watch a short rewarded ad; Pro users skip it.</span></li>
-      <li><div class="step-n">6</div><span>The SAV is written to the game's directory via Shizuku shell. Toast shows: <strong>"Applied successfully!"</strong></span></li>
-      <li><div class="step-n">7</div><span>Open the game — your new settings are now active.</span></li>
+      <li><div class="step-n">2</div><span>Make sure the correct <strong>game chip</strong> is selected at the top (e.g. INDIA for BGMI).</span></li>
+      <li><div class="step-n">3</div><span><strong>Fully close your game</strong> — swipe it away from Recent Apps.</span></li>
+      <li><div class="step-n">4</div><span>Tap the <strong>Apply</strong> button. A confirmation dialog will appear.</span></li>
+      <li><div class="step-n">5</div><span>Confirm by tapping Apply again. Free users will see a short ad first; Pro users skip straight to applying.</span></li>
+      <li><div class="step-n">6</div><span>A success message appears when done.</span></li>
+      <li><div class="step-n">7</div><span>Open your game — your new settings are now active.</span></li>
     </ul>
     <div class="callout warn">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-warn"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Changes are NOT automatic</div><div class="cl-text">Editing values in any tab does not immediately write to the game. You must tap <strong>Apply</strong> every time. If you close TurboFPS Pro without applying, in-memory changes are lost.</div></div>
+      <div class="cl-body"><div class="cl-title">Don't forget to Apply!</div><div class="cl-text">Changes you make in the editor do <strong>not</strong> automatically go to your game. You must tap Apply every time. If you close TurboFPS Pro without tapping Apply, your edits are lost.</div></div>
     </div>
     <div class="callout success">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Apply failed? Check these</div><div class="cl-text">(1) Shizuku must be running — open Shizuku app to verify. (2) Game must be fully closed. (3) Correct game chip must be selected. You can also use Save to export the file and copy it manually.</div></div>
+      <div class="cl-body"><div class="cl-title">Apply not working?</div><div class="cl-text">Check three things: (1) Shizuku is running — open the Shizuku app to confirm. (2) Your game is fully closed. (3) The correct game chip is selected. If it still fails, use the Save button to export the file and place it manually.</div></div>
     </div>
   </section>
 
@@ -661,28 +645,28 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
   <section class="section" id="s12">
     <div class="section-header">
       <div class="section-num">12</div>
-      <div><div class="section-title">Reset Options</div><div class="section-sub">Two distinct resets — editor state vs game file on device</div></div>
+      <div><div class="section-title">Reset Options</div><div class="section-sub">Two different ways to reset — know the difference</div></div>
     </div>
-    <p>Open via the three-dot menu → Reset. A bottom sheet shows two options:</p>
+    <p>Tap the three-dot menu at the top right and select <strong>Reset</strong>. You'll see two options:</p>
     <div class="reset-grid">
       <div class="reset-card">
         <div class="r-ico green"><svg viewBox="0 0 24 24"><use href="#i-reset"/></svg></div>
         <div>
           <div class="r-name">Reset App Changes</div>
-          <div class="r-desc">Undoes all unsaved edits in the current session. Restores the editor to the state it was in when you last opened or imported the file. Nothing is written to the game. If no changes were made, it simply reloads from the last imported state.</div>
+          <div class="r-desc">Undoes any edits you've made in this session and takes the editor back to the state it was in when you last imported or opened a file. Nothing is written to the game — it's completely safe. Use this if you made a mistake and want to start over.</div>
         </div>
       </div>
       <div class="reset-card">
         <div class="r-ico orange"><svg viewBox="0 0 24 24"><use href="#i-delete"/></svg></div>
         <div>
           <div class="r-name">Reset Game File</div>
-          <div class="r-desc">Deletes the Active.sav from the selected game's storage on your device using Shizuku shell. The game auto-generates a fresh default file on next launch. Requires Shizuku + game must be closed.</div>
+          <div class="r-desc">Completely deletes the settings file from your game. The next time you open the game, it will create a brand new default settings file from scratch. Use this only if you want to fully factory-reset your game's graphics settings.</div>
         </div>
       </div>
     </div>
     <div class="callout warn">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-warn"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Reset Game File is permanent</div><div class="cl-text">This deletes all custom settings stored in Active.sav — including in-game sensitivity, crosshair colour, control layout, and everything else in that file. Only use it to fully restore the game to factory settings.</div></div>
+      <div class="cl-body"><div class="cl-title">Reset Game File removes everything</div><div class="cl-text">This doesn't just reset graphics — it deletes the entire settings file, which also includes things like your in-game sensitivity, crosshair settings, and control layout. Only use it if you're sure you want a completely fresh start.</div></div>
     </div>
   </section>
 
@@ -693,17 +677,17 @@ code{font-family:'Roboto Mono',monospace;font-size:12px;background:var(--surface
       <div><div class="section-title">Quick Start</div><div class="section-sub">Unlock FPS in under 2 minutes</div></div>
     </div>
     <ul class="steps">
-      <li><div class="step-n">1</div><span>Open <strong>Shizuku</strong> and confirm it shows <em>Running</em>.</span></li>
-      <li><div class="step-n">2</div><span>Open <strong>TurboFPS Pro</strong> → go to the <strong>Nex Editor</strong> tab.</span></li>
-      <li><div class="step-n">3</div><span>Tap <strong>Import</strong> in the bottom action bar → select your game version.</span></li>
-      <li><div class="step-n">4</div><span>In the <strong>FPS &amp; Graphics</strong> tab, tap your desired FPS preset — e.g. <strong>Extreme+</strong> for 90 FPS.</span></li>
-      <li><div class="step-n">5</div><span>Select a quality preset — e.g. <strong>Balanced</strong>.</span></li>
-      <li><div class="step-n">6</div><span>Fully close the game. Tap the <strong>Apply</strong> FAB and confirm.</span></li>
-      <li><div class="step-n">7</div><span>Open the game — enjoy the new settings.</span></li>
+      <li><div class="step-n">1</div><span>Open <strong>Shizuku</strong> and make sure it shows <em>Running</em>.</span></li>
+      <li><div class="step-n">2</div><span>Open <strong>TurboFPS Pro</strong> and go to the <strong>Nex Editor</strong> tab.</span></li>
+      <li><div class="step-n">3</div><span>Tap the <strong>Import</strong> button and select your game version to load your current settings.</span></li>
+      <li><div class="step-n">4</div><span>In the <strong>FPS &amp; Graphics</strong> tab, tap your desired FPS — e.g. <strong>Extreme+</strong> for 90 FPS.</span></li>
+      <li><div class="step-n">5</div><span>Pick a graphics quality — e.g. <strong>Balanced</strong> for a solid middle ground.</span></li>
+      <li><div class="step-n">6</div><span>Fully close your game, then tap the <strong>Apply</strong> button and confirm.</span></li>
+      <li><div class="step-n">7</div><span>Open your game and enjoy the new settings.</span></li>
     </ul>
     <div class="callout success">
       <div class="callout-ico"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-      <div class="cl-body"><div class="cl-title">Support &amp; Updates</div><div class="cl-text">Official TurboFPS channel: <a href="https://t.me/YTTxHuExanOP" style="color:var(--primary);font-weight:700;font-family:'Roboto Mono',monospace;font-size:12px;">t.me/YTTxHuExanOP</a></div></div>
+      <div class="cl-body"><div class="cl-title">Need help or updates?</div><div class="cl-text">Join the official TurboFPS channel on Telegram: <a href="https://t.me/YTTxHuExanOP" style="color:var(--primary);font-weight:700;font-family:'Roboto Mono',monospace;font-size:12px;">t.me/YTTxHuExanOP</a></div></div>
     </div>
   </section>
 
