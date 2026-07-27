@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurboFPS Pro — Addon Creator Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --md-primary:             #6750A4;
+  --md-on-primary:          #FFFFFF;
+  --md-primary-container:   #EADDFF;
+  --md-on-primary-container:#21005E;
+  --md-secondary:           #7965AF;
+  --md-secondary-container: #E8DEF8;
+  --md-tertiary:            #006874;
+  --md-tertiary-container:  #97F0FF;
+  --md-on-tertiary-container:#001F24;
+  --md-surface:             #FFFBFE;
+  --md-surface-container:   #F3EDF7;
+  --md-surface-container-high:#ECE6F0;
+  --md-surface-variant:     #E7E0EC;
+  --md-on-surface:          #1C1B1F;
+  --md-on-surface-variant:  #49454E;
+  --md-outline:             #79747E;
+  --md-outline-variant:     #CAC4D0;
+  --md-error:               #B3261E;
+  --md-error-container:     #F9DEDC;
+  --md-on-error-container:  #410E0B;
+  --md-success:             #146B3A;
+  --md-success-container:   #C8F5D9;
+  --md-on-success-container:#002111;
+  --md-warn:                #7A5900;
+  --md-warn-container:      #FFDEA0;
+  --md-on-warn-container:   #271900;
+  --el1: 0 1px 2px rgba(0,0,0,.07), 0 1px 3px 1px rgba(0,0,0,.05);
+  --el2: 0 1px 2px rgba(0,0,0,.10), 0 2px 6px 2px rgba(0,0,0,.07);
+  --el3: 0 4px 8px 3px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.10);
+  --sidebar-w: 280px;
+  --topbar-h:  64px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 28px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Google Sans',sans-serif;
+  background:var(--md-surface);
+  color:var(--md-on-surface);
+  min-height:100vh;
+  line-height:1.7;
+}
+
+/* ── SVG SPRITE ── */
+.svg-defs{display:none;}
+
+/* ── TOP APP BAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--topbar-h);
+  background:rgba(255,251,254,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--md-outline-variant);
+  box-shadow:var(--el1);
+  display:flex;align-items:center;gap:14px;
+  padding:0 28px;
+}
+.topbar-logo{
+  width:38px;height:38px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,#7965AF 0%,#6750A4 50%,#21005E 100%);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(103,80,164,.35);
+}
+.topbar-logo svg{width:20px;height:20px;fill:#fff;}
+.topbar-title{
+  font-family:'Google Sans Display',sans-serif;
+  font-size:17px;font-weight:700;color:var(--md-on-surface);letter-spacing:-.2px;
+}
+.topbar-divider{width:1px;height:22px;background:var(--md-outline-variant);margin:0 4px;}
+.topbar-sub{font-size:13px;color:var(--md-on-surface-variant);font-weight:500;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:20px;
+  font-size:11.5px;font-weight:600;letter-spacing:.4px;
+  background:var(--md-primary-container);
+  color:var(--md-on-primary-container);
+}
+.badge-filled{background:var(--md-primary);color:#fff;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;padding-top:var(--topbar-h);min-height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  position:sticky;top:var(--topbar-h);
+  height:calc(100vh - var(--topbar-h));
+  overflow-y:auto;
+  border-right:1px solid var(--md-outline-variant);
+  padding:24px 12px;
+  background:var(--md-surface);
+  scrollbar-width:thin;
+  scrollbar-color:var(--md-outline-variant) transparent;
+}
+.sidebar::-webkit-scrollbar{width:4px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--md-outline-variant);border-radius:4px;}
+.sidebar-label{
+  font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--md-on-surface-variant);padding:0 12px 10px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:var(--radius-lg);
+  font-size:13.5px;font-weight:500;color:var(--md-on-surface-variant);
+  text-decoration:none;cursor:pointer;transition:all .18s ease;
+  margin-bottom:2px;
+}
+.nav-item:hover{background:var(--md-surface-container);color:var(--md-on-surface);}
+.nav-item.active{
+  background:var(--md-secondary-container);
+  color:var(--md-on-primary-container);font-weight:700;
+}
+.nav-item .nav-icon{
+  width:20px;height:20px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-item .nav-icon svg{width:18px;height:18px;fill:currentColor;}
+.nav-sep{height:1px;background:var(--md-outline-variant);margin:12px 4px;}
+
+/* ── MAIN CONTENT ── */
+main{
+  flex:1;min-width:0;
+  padding:48px 56px 80px;
+  max-width:900px;
+}
+.section{margin-bottom:64px;}
+
+/* ── SECTION HEADER ── */
+.section-header{
+  display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;
+}
+.section-num{
+  width:40px;height:40px;border-radius:var(--radius-md);flex-shrink:0;
+  background:var(--md-primary);color:#fff;
+  font-weight:800;font-size:17px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(103,80,164,.3);
+}
+.section-title{
+  font-family:'Google Sans Display',sans-serif;
+  font-size:26px;font-weight:700;color:var(--md-on-surface);letter-spacing:-.3px;line-height:1.2;
+}
+.section-sub{font-size:14px;color:var(--md-on-surface-variant);margin-top:4px;font-weight:500;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--md-primary) 0%,#9C7AFF 60%,#6EDFEF 100%);
+  border-radius:var(--radius-xl);
+  padding:52px 44px;
+  color:#fff;
+  margin-bottom:48px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:260px;height:260px;border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.hero::after{
+  content:'';position:absolute;bottom:-60px;right:80px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:20px;
+  background:rgba(255,255,255,.18);
+  font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-tag svg{width:13px;height:13px;fill:#fff;}
+.hero-title{
+  font-family:'Google Sans Display',sans-serif;
+  font-size:38px;font-weight:700;letter-spacing:-.6px;line-height:1.1;
+  margin-bottom:14px;
+}
+.hero-desc{font-size:16px;opacity:.9;max-width:520px;line-height:1.7;}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:20px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  font-size:12.5px;font-weight:600;
+}
+.hero-chip svg{width:13px;height:13px;fill:#fff;}
+
+/* ── SUB HEADING ── */
+.sub-heading{
+  display:flex;align-items:center;gap:10px;
+  font-size:16px;font-weight:700;color:var(--md-on-surface);
+  margin:28px 0 14px;
+}
+.sub-bar{width:4px;height:18px;border-radius:2px;background:var(--md-primary);flex-shrink:0;}
+
+/* ── BODY TEXT ── */
+p{font-size:15px;color:var(--md-on-surface-variant);margin-bottom:14px;line-height:1.75;}
+
+/* ── FILE TREE ── */
+.tree-card{
+  background:var(--md-surface-container);
+  border:1px solid var(--md-outline-variant);
+  border-radius:var(--radius-md);
+  padding:20px 24px;
+  margin:16px 0;
+  font-family:'Roboto Mono',monospace;
+  font-size:13px;color:var(--md-on-surface);
+  line-height:2;
+}
+.tree-card .tree-root{color:var(--md-primary);font-weight:700;}
+.tree-card .tree-req{color:var(--md-primary);}
+.tree-card .tree-opt{color:var(--md-on-surface-variant);}
+.tree-card .tree-comment{color:var(--md-outline);font-size:11.5px;}
+.tree-card .tree-bad{color:var(--md-error);}
+
+/* ── CODE BLOCK ── */
+.code-wrap{
+  position:relative;
+  background:#1A1726;
+  border-radius:var(--radius-md);
+  margin:16px 0;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow:var(--el2);
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  background:rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.code-lang{
+  font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+}
+.code-filename{font-size:12px;color:rgba(255,255,255,.6);font-family:'Roboto Mono',monospace;}
+.code-body{padding:18px 20px;overflow-x:auto;}
+pre{font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.85;color:#CDD6F4;margin:0;}
+.c-kw{color:#CBA6F7;}
+.c-str{color:#A6E3A1;}
+.c-fn{color:#89DCEB;}
+.c-var{color:#F38BA8;}
+.c-env{color:#FAB387;}
+.c-cmt{color:#6C7086;font-style:italic;}
+.c-hl{color:#F9E2AF;}
+
+/* ── PROP TABLE ── */
+.prop-table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-size:14px;}
+.prop-table th{
+  background:var(--md-surface-container-high);
+  color:var(--md-on-surface-variant);
+  font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  padding:10px 14px;
+}
+.prop-table th:first-child{border-radius:var(--radius-sm) 0 0 0;}
+.prop-table th:last-child{border-radius:0 var(--radius-sm) 0 0;}
+.prop-table td{
+  padding:11px 14px;
+  border-bottom:1px solid var(--md-outline-variant);
+  color:var(--md-on-surface);
+  vertical-align:top;
+}
+.prop-table tr:last-child td{border-bottom:none;}
+.prop-table tr:hover td{background:var(--md-surface-container);}
+.prop-key{font-family:'Roboto Mono',monospace;font-size:13px;color:var(--md-primary);font-weight:600;}
+.badge-req{
+  display:inline-block;padding:2px 9px;border-radius:12px;
+  font-size:11px;font-weight:700;
+  background:var(--md-primary-container);color:var(--md-on-primary-container);
+}
+.badge-opt{
+  display:inline-block;padding:2px 9px;border-radius:12px;
+  font-size:11px;font-weight:700;
+  background:var(--md-surface-container-high);color:var(--md-on-surface-variant);
+}
+.border-table{border:1px solid var(--md-outline-variant);border-radius:var(--radius-md);overflow:hidden;}
+
+/* ── CALLOUT ── */
+.callout{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;border-radius:var(--radius-md);
+  margin:18px 0;
+}
+.callout-icon{width:22px;height:22px;flex-shrink:0;margin-top:1px;}
+.callout-icon svg{width:22px;height:22px;}
+.callout.info{background:var(--md-primary-container);border-left:4px solid var(--md-primary);}
+.callout.info .callout-icon svg{fill:var(--md-on-primary-container);}
+.callout.warn{background:var(--md-warn-container);border-left:4px solid #C8A000;}
+.callout.warn .callout-icon svg{fill:var(--md-on-warn-container);}
+.callout.success{background:var(--md-success-container);border-left:4px solid #146B3A;}
+.callout.success .callout-icon svg{fill:var(--md-on-success-container);}
+.callout.error{background:var(--md-error-container);border-left:4px solid var(--md-error);}
+.callout.error .callout-icon svg{fill:var(--md-on-error-container);}
+.callout-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.callout.info .callout-title{color:var(--md-on-primary-container);}
+.callout.warn .callout-title{color:var(--md-on-warn-container);}
+.callout.success .callout-title{color:var(--md-on-success-container);}
+.callout.error .callout-title{color:var(--md-on-error-container);}
+.callout-text{font-size:13.5px;line-height:1.65;}
+.callout.info .callout-text{color:var(--md-on-primary-container);}
+.callout.warn .callout-text{color:var(--md-on-warn-container);}
+.callout.success .callout-text{color:var(--md-on-success-container);}
+.callout.error .callout-text{color:var(--md-on-error-container);}
+
+/* ── SCRIPT PRIORITY CARDS ── */
+.script-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:16px 0;}
+.script-card{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:var(--md-surface-container);
+  border:1px solid var(--md-outline-variant);
+  border-radius:var(--radius-md);
+}
+.script-rank{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+}
+.script-rank.r1{background:var(--md-primary);color:#fff;}
+.script-rank.r2{background:var(--md-secondary-container);color:var(--md-on-primary-container);}
+.script-rank.r3{background:var(--md-surface-container-high);color:var(--md-on-surface-variant);}
+.script-name{font-family:'Roboto Mono',monospace;font-size:13px;font-weight:600;color:var(--md-on-surface);}
+.script-desc{font-size:11.5px;color:var(--md-on-surface-variant);margin-top:2px;}
+
+/* ── STEP LIST ── */
+.steps{list-style:none;counter-reset:step-count;margin:14px 0;}
+.steps li{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:12px 0;
+  border-bottom:1px solid var(--md-outline-variant);
+  counter-increment:step-count;
+  font-size:14.5px;color:var(--md-on-surface);line-height:1.65;
+}
+.steps li:last-child{border-bottom:none;}
+.step-num{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  background:var(--md-primary);color:#fff;
+  font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.steps li strong{color:var(--md-on-surface);font-weight:700;}
+
+/* ── BRIDGE METHOD CARDS ── */
+.method-card{
+  border:1px solid var(--md-outline-variant);
+  border-radius:var(--radius-md);
+  margin:14px 0;
+  overflow:hidden;
+  box-shadow:var(--el1);
+}
+.method-header{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;
+  background:var(--md-surface-container);
+  border-bottom:1px solid var(--md-outline-variant);
+}
+.method-badge{
+  font-family:'Roboto Mono',monospace;
+  font-size:13px;font-weight:700;
+  color:var(--md-primary);
+  background:var(--md-primary-container);
+  padding:3px 10px;border-radius:6px;
+}
+.method-name{font-size:15px;font-weight:700;color:var(--md-on-surface);}
+.method-desc-text{font-size:13px;color:var(--md-on-surface-variant);margin-top:1px;}
+.method-body{padding:16px 18px;}
+.method-params{font-size:13px;color:var(--md-on-surface-variant);margin-bottom:10px;}
+.method-params strong{color:var(--md-on-surface);font-weight:600;}
+
+/* ── ENV VARS ── */
+.env-list{margin:12px 0;}
+.env-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:11px 14px;
+  border-bottom:1px solid var(--md-outline-variant);
+  font-size:13.5px;
+}
+.env-row:last-child{border-bottom:none;}
+.env-key{
+  font-family:'Roboto Mono',monospace;font-size:12.5px;font-weight:600;
+  color:var(--md-tertiary);min-width:230px;flex-shrink:0;
+}
+.env-val{color:var(--md-on-surface-variant);line-height:1.55;}
+.env-card{
+  border:1px solid var(--md-outline-variant);
+  border-radius:var(--radius-md);overflow:hidden;
+}
+
+/* ── FEATURE OVERVIEW CARDS ── */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin:20px 0;}
+.feature-card{
+  padding:20px;border-radius:var(--radius-lg);
+  background:var(--md-surface-container);
+  border:1px solid var(--md-outline-variant);
+  transition:box-shadow .18s;
+}
+.feature-card:hover{box-shadow:var(--el2);}
+.feature-icon{
+  width:44px;height:44px;border-radius:var(--radius-md);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:14px;
+}
+.feature-icon svg{width:22px;height:22px;}
+.fi-install{background:var(--md-primary-container);}
+.fi-install svg{fill:var(--md-on-primary-container);}
+.fi-script{background:var(--md-secondary-container);}
+.fi-script svg{fill:var(--md-on-primary-container);}
+.fi-status{background:var(--md-tertiary-container);}
+.fi-status svg{fill:var(--md-on-tertiary-container);}
+.fi-webui{background:#E8F5E9;}
+.fi-webui svg{fill:#1B5E20;}
+.fi-banner{background:#FFF3E0;}
+.fi-banner svg{fill:#E65100;}
+.fi-batch{background:#EDE7F6;}
+.fi-batch svg{fill:#4527A0;}
+.feature-title{font-size:15px;font-weight:700;color:var(--md-on-surface);margin-bottom:6px;}
+.feature-desc{font-size:13px;color:var(--md-on-surface-variant);line-height:1.6;}
+
+/* ── GOOD / BAD ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.compare-card{border-radius:var(--radius-md);overflow:hidden;}
+.compare-head{
+  padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:.5px;
+  display:flex;align-items:center;gap:6px;
+}
+.compare-head svg{width:15px;height:15px;}
+.compare-good .compare-head{background:var(--md-success-container);color:var(--md-on-success-container);}
+.compare-good .compare-head svg{fill:var(--md-on-success-container);}
+.compare-bad .compare-head{background:var(--md-error-container);color:var(--md-on-error-container);}
+.compare-bad .compare-head svg{fill:var(--md-on-error-container);}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;margin:14px 0;}
+.checklist li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 0;font-size:14px;color:var(--md-on-surface-variant);
+  border-bottom:1px solid var(--md-outline-variant);
+}
+.checklist li:last-child{border-bottom:none;}
+.check-ico{width:18px;height:18px;flex-shrink:0;margin-top:2px;}
+.check-ico svg{width:18px;height:18px;}
+.check-ico.ok svg{fill:var(--md-success);}
+.check-ico.no svg{fill:var(--md-error);}
+
+/* ── WEBROOT FOLDER BADGE ── */
+.folder-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:6px;
+  background:var(--md-secondary-container);color:var(--md-on-primary-container);
+  font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;
+}
+
+/* ── BATCH STRUCTURE ── */
+.batch-visual{
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--md-outline-variant);
+  border-radius:var(--radius-md);overflow:hidden;margin:14px 0;
+}
+.batch-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border-bottom:1px solid var(--md-outline-variant);
+  font-family:'Roboto Mono',monospace;font-size:13px;
+}
+.batch-row:last-child{border-bottom:none;}
+.batch-row.master{background:var(--md-primary-container);color:var(--md-on-primary-container);font-weight:700;}
+.batch-row.child{background:var(--md-surface-container);color:var(--md-on-surface);padding-left:40px;}
+.batch-ico{width:16px;height:16px;flex-shrink:0;}
+.batch-ico svg{width:16px;height:16px;fill:currentColor;}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--md-outline-variant);
+  padding:28px 56px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  font-size:13px;color:var(--md-on-surface-variant);
+  background:var(--md-surface-container);
+}
+footer a{color:var(--md-primary);text-decoration:none;font-weight:600;}
+
+/* ── MOBILE HEADER TOGGLE ── */
+.mob-menu-btn{display:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  main{padding:32px 24px 60px;}
+  .compare-grid{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .mob-menu-btn{
+    display:flex;align-items:center;justify-content:center;
+    width:36px;height:36px;border:none;
+    background:var(--md-surface-container);border-radius:50%;cursor:pointer;
+  }
+  .mob-menu-btn svg{width:20px;height:20px;fill:var(--md-on-surface);}
+  footer{padding:24px;}
+}
+@media(max-width:600px){
+  .topbar{padding:0 16px;}
+  .topbar-sub,.topbar-divider,.badge{display:none;}
+  .hero{padding:32px 24px;}
+  .hero-title{font-size:26px;}
+  .script-grid{grid-template-columns:1fr;}
+  .feature-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG ICON DEFS -->
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- puzzle/addon icon -->
+    <symbol id="ico-addon" viewBox="0 0 24 24">
+      <path d="M20.5 11H19V7a2 2 0 0 0-2-2h-4V3.5A2.5 2.5 0 0 0 10.5 1 2.5 2.5 0 0 0 8 3.5V5H4a2 2 0 0 0-2 2v3.8h1.5c1.5 0 2.7 1.2 2.7 2.7S5 16.2 3.5 16.2H2V20a2 2 0 0 0 2 2h3.8v-1.5c0-1.5 1.2-2.7 2.7-2.7 1.5 0 2.7 1.2 2.7 2.7V22H17a2 2 0 0 0 2-2v-4h1.5a2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5z"/>
+    </symbol>
+    <!-- file icon -->
+    <symbol id="ico-file" viewBox="0 0 24 24">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/>
+    </symbol>
+    <!-- terminal/script -->
+    <symbol id="ico-terminal" viewBox="0 0 24 24">
+      <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 16H5V5h14v14zM8.07 17.07 6.66 15.66 9.32 13l-2.66-2.66 1.41-1.41L12.14 13l-4.07 4.07zM17 15h-6v-2h6v2z"/>
+    </symbol>
+    <!-- web/html -->
+    <symbol id="ico-web" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    </symbol>
+    <!-- image/banner -->
+    <symbol id="ico-image" viewBox="0 0 24 24">
+      <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+    </symbol>
+    <!-- zip/package -->
+    <symbol id="ico-package" viewBox="0 0 24 24">
+      <path d="m12 3-9 5v8l9 5 9-5V8l-9-5zm-1 14.06-6-3.33V9.27l6 3.33v4.46zm1-6.22L6.04 7.5 12 4.22l5.96 3.28L12 10.84zm7 2.89-6 3.33v-4.46l6-3.33v4.46z"/>
+    </symbol>
+    <!-- check -->
+    <symbol id="ico-check" viewBox="0 0 24 24">
+      <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+    </symbol>
+    <!-- close/x -->
+    <symbol id="ico-close" viewBox="0 0 24 24">
+      <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </symbol>
+    <!-- info -->
+    <symbol id="ico-info" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+    </symbol>
+    <!-- warn -->
+    <symbol id="ico-warn" viewBox="0 0 24 24">
+      <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+    </symbol>
+    <!-- shield -->
+    <symbol id="ico-shield" viewBox="0 0 24 24">
+      <path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+    </symbol>
+    <!-- bolt/lightning -->
+    <symbol id="ico-bolt" viewBox="0 0 24 24">
+      <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+    </symbol>
+    <!-- layers/stack -->
+    <symbol id="ico-layers" viewBox="0 0 24 24">
+      <path d="m11.99 18.54-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/>
+    </symbol>
+    <!-- settings -->
+    <symbol id="ico-settings" viewBox="0 0 24 24">
+      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+    </symbol>
+    <!-- menu -->
+    <symbol id="ico-menu" viewBox="0 0 24 24">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </symbol>
+    <!-- star -->
+    <symbol id="ico-star" viewBox="0 0 24 24">
+      <path d="m12 17.27 4.15 2.51c.76.46 1.69-.22 1.49-1.08l-1.1-4.72 3.67-3.18c.67-.58.31-1.68-.57-1.75l-4.83-.41-1.89-4.46c-.34-.81-1.5-.81-1.84 0L9.19 8.63l-4.83.41c-.88.07-1.24 1.17-.57 1.75l3.67 3.18-1.1 4.72c-.2.86.73 1.54 1.49 1.08L12 17.27z"/>
+    </symbol>
+    <!-- home -->
+    <symbol id="ico-home" viewBox="0 0 24 24">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </symbol>
+    <!-- code brackets -->
+    <symbol id="ico-code" viewBox="0 0 24 24">
+      <path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+    </symbol>
+    <!-- toggle switch -->
+    <symbol id="ico-toggle" viewBox="0 0 24 24">
+      <path d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+    </symbol>
+    <!-- list/batch -->
+    <symbol id="ico-list" viewBox="0 0 24 24">
+      <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ── TOP APP BAR ── -->
+<header class="topbar">
+  <button class="mob-menu-btn" onclick="toggleSidebar()">
+    <svg viewBox="0 0 24 24"><use href="#ico-menu"/></svg>
+  </button>
+  <div class="topbar-logo">
+    <svg viewBox="0 0 24 24"><use href="#ico-bolt"/></svg>
+  </div>
+  <span class="topbar-title">TurboFPS Pro</span>
+  <div class="topbar-divider"></div>
+  <span class="topbar-sub">Addon Creator Guide</span>
+  <div class="topbar-right">
+    <span class="badge">v2.99+</span>
+    <span class="badge badge-filled">For Creators</span>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-label">Getting Started</div>
+  <a class="nav-item active" href="#s0">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-home"/></svg></span>Overview
+  </a>
+  <a class="nav-item" href="#s1">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-package"/></svg></span>File Structure
+  </a>
+  <a class="nav-item" href="#s2">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-file"/></svg></span>module.prop
+  </a>
+  <div class="nav-sep"></div>
+  <div class="sidebar-label">Scripts</div>
+  <a class="nav-item" href="#s3">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-terminal"/></svg></span>Install Scripts
+  </a>
+  <a class="nav-item" href="#s4">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-terminal"/></svg></span>Uninstall Scripts
+  </a>
+  <a class="nav-item" href="#s5">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-toggle"/></svg></span>Status Checker
+  </a>
+  <div class="nav-sep"></div>
+  <div class="sidebar-label">Optional Extras</div>
+  <a class="nav-item" href="#s6">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-layers"/></svg></span>Changelog
+  </a>
+  <a class="nav-item" href="#s7">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-web"/></svg></span>Web UI Page
+  </a>
+  <a class="nav-item" href="#s8">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-image"/></svg></span>Banner Image
+  </a>
+  <div class="nav-sep"></div>
+  <div class="sidebar-label">Advanced</div>
+  <a class="nav-item" href="#s9">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-code"/></svg></span>JS Bridge API
+  </a>
+  <a class="nav-item" href="#s10">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-list"/></svg></span>Batch Installer
+  </a>
+  <a class="nav-item" href="#s11">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></span>Safety &amp; Best Practices
+  </a>
+  <a class="nav-item" href="#s12">
+    <span class="nav-icon"><svg viewBox="0 0 24 24"><use href="#ico-star"/></svg></span>Publishing Checklist
+  </a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero" id="s0">
+    <div class="hero-tag">
+      <svg viewBox="0 0 24 24"><use href="#ico-addon"/></svg>
+      Addon Creator Guide
+    </div>
+    <div class="hero-title">Build Addons for TurboFPS Pro</div>
+    <div class="hero-desc">Learn how to create, package, and publish fully compatible addons — shell scripts, optional Web UI pages, banners, and changelogs — all without any root access required.</div>
+    <div class="hero-chips">
+      <div class="hero-chip"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg>No Root Required</div>
+      <div class="hero-chip"><svg viewBox="0 0 24 24"><use href="#ico-package"/></svg>ZIP-Based Format</div>
+      <div class="hero-chip"><svg viewBox="0 0 24 24"><use href="#ico-web"/></svg>HTML Web UI Support</div>
+      <div class="hero-chip"><svg viewBox="0 0 24 24"><use href="#ico-list"/></svg>Batch Installable</div>
+    </div>
+  </div>
+
+  <!-- FEATURE OVERVIEW -->
+  <div class="section-header" style="margin-bottom:16px">
+    <div><div class="section-title" style="font-size:20px">What can an Addon do?</div></div>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon fi-install">
+        <svg viewBox="0 0 24 24"><use href="#ico-terminal"/></svg>
+      </div>
+      <div class="feature-title">Run Shell Commands</div>
+      <div class="feature-desc">Execute any shell script on install, uninstall, or toggle. Tweak CPU governors, modify kernel params, apply system tweaks.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-status">
+        <svg viewBox="0 0 24 24"><use href="#ico-toggle"/></svg>
+      </div>
+      <div class="feature-title">Live Status Check</div>
+      <div class="feature-desc">Add a status.sh to show users a real-time report of whether your addon is active and working correctly.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-webui">
+        <svg viewBox="0 0 24 24"><use href="#ico-web"/></svg>
+      </div>
+      <div class="feature-title">Interactive Web UI</div>
+      <div class="feature-desc">Build a full HTML/JS settings page inside your addon. Run shell commands from buttons, sliders, or any UI you design.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-banner">
+        <svg viewBox="0 0 24 24"><use href="#ico-image"/></svg>
+      </div>
+      <div class="feature-title">Card Branding</div>
+      <div class="feature-desc">Include a banner.png to give your addon a custom visual identity on the addon card shown in the app.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-script">
+        <svg viewBox="0 0 24 24"><use href="#ico-layers"/></svg>
+      </div>
+      <div class="feature-title">Changelog Display</div>
+      <div class="feature-desc">A changes.txt file adds a Changelog button to your card. Users tap it to read your version history.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-batch">
+        <svg viewBox="0 0 24 24"><use href="#ico-list"/></svg>
+      </div>
+      <div class="feature-title">Batch Distribution</div>
+      <div class="feature-desc">Pack multiple addon ZIPs inside one master ZIP. Users install all of them at once using the Batch Installer.</div>
+    </div>
+  </div>
+
+  <!-- ── S1 FILE STRUCTURE ── -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">File Structure</div>
+        <div class="section-sub">How to package your addon as a ZIP archive</div>
+      </div>
+    </div>
+
+    <p>Every TurboFPS addon is a <strong>ZIP archive</strong> containing a single folder at its root. That folder holds all your addon files. The installer validates this structure before extraction — loose files at the ZIP root will cause immediate rejection.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Correct Structure</div>
+
+    <div class="tree-card">
+      <span class="tree-root">your_addon.zip</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-req">my_addon_folder/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-req">module.prop</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Required — metadata</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-req">install.sh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Required — install / activate script</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-opt">uninstall.sh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Recommended — cleanup script</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-opt">status.sh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Optional — live status checker</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-opt">changes.txt</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Optional — changelog</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-opt">webroot/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Optional — Web UI folder</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-opt">action.html</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Web UI entry page</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-opt">banner.png</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Optional — card background image</span>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Incorrect Structure (Rejected)</div>
+    <div class="tree-card">
+      <span class="tree-root">your_addon.zip</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-bad">module.prop</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Files at root — no parent folder!</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-bad">install.sh</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-bad">action.html</span>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-warn"/></svg></div>
+      <div>
+        <div class="callout-title">One Folder at Root</div>
+        <div class="callout-text">Your ZIP must open to show exactly one folder. Files placed directly at the root of the ZIP will cause installation to fail with no further error.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S2 MODULE.PROP ── -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">module.prop</div>
+        <div class="section-sub">The metadata file that identifies your addon to the installer</div>
+      </div>
+    </div>
+
+    <p>This is a plain-text key=value file that tells TurboFPS Pro everything about your addon. Every field is read, validated, and displayed in the addon card UI. Without a valid module.prop the installer will reject your addon.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Format</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">properties</span>
+        <span class="code-filename">module.prop</span>
+      </div>
+      <div class="code-body"><pre><span class="c-env">id</span>=<span class="c-str">com.yourname.addonname</span>
+<span class="c-env">name</span>=<span class="c-str">My Awesome Addon</span>
+<span class="c-env">version</span>=<span class="c-str">1.0</span>
+<span class="c-env">versionCode</span>=<span class="c-str">1</span>
+<span class="c-env">author</span>=<span class="c-str">YourName</span>
+<span class="c-env">description</span>=<span class="c-str">Short description of what this addon does</span>
+<span class="c-env">turbofps</span>=<span class="c-str">true</span></pre></div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Field Reference</div>
+    <div class="border-table">
+      <table class="prop-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Example</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="prop-key">id</span></td>
+            <td><code style="font-size:12px">com.you.addon</code></td>
+            <td>Unique identifier in reverse domain format. Duplicate IDs are rejected or prompt an update dialog.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">name</span></td>
+            <td><code style="font-size:12px">My Addon</code></td>
+            <td>Display name shown on the addon card.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">version</span></td>
+            <td><code style="font-size:12px">1.0</code></td>
+            <td>Human-readable version string shown on the card.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">versionCode</span></td>
+            <td><code style="font-size:12px">1</code></td>
+            <td>Integer used for update comparison. A higher number means a newer version and triggers an auto-update flow.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">author</span></td>
+            <td><code style="font-size:12px">YourName</code></td>
+            <td>Creator name shown on the card.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">description</span></td>
+            <td><code style="font-size:12px">Optimizes CPU...</code></td>
+            <td>Short description shown below the addon name on the card.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">turbofps</span></td>
+            <td><code style="font-size:12px">true</code></td>
+            <td>Compatibility flag. Must be exactly <code>true</code> (lowercase). Addons without this are blocked immediately.</td>
+            <td><span class="badge-req">Required</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-info"/></svg></div>
+      <div>
+        <div class="callout-title">Update Flow</div>
+        <div class="callout-text">If an addon with the same <code>id</code> is already installed, the installer compares <code>versionCode</code>. A higher code replaces the old addon automatically. A same or lower code shows a "Already installed / up to date" message and skips installation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S3 INSTALL SCRIPTS ── -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Install Scripts</div>
+        <div class="section-sub">Runs when your addon is installed or its toggle is turned ON</div>
+      </div>
+    </div>
+
+    <p>When a user installs your addon or enables it via the toggle switch, TurboFPS Pro searches for and runs your install script. The installer checks for these filenames in priority order — all names are accepted case-insensitively.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Script Priority Order</div>
+    <div class="script-grid">
+      <div class="script-card">
+        <div class="script-rank r1">1</div>
+        <div>
+          <div class="script-name">customize.sh</div>
+          <div class="script-desc">Highest priority. Runs before all others. Use for complex setup logic.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r2">2</div>
+        <div>
+          <div class="script-name">install.sh</div>
+          <div class="script-desc">Standard install script. Most addons use this.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">3</div>
+        <div>
+          <div class="script-name">activate.sh</div>
+          <div class="script-desc">Alternative name for install logic.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">4</div>
+        <div>
+          <div class="script-name">run.sh</div>
+          <div class="script-desc">Another alternative name.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">5</div>
+        <div>
+          <div class="script-name">action.sh</div>
+          <div class="script-desc">Another alternative name.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">6</div>
+        <div>
+          <div class="script-name">service.sh</div>
+          <div class="script-desc">Another alternative name.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-info"/></svg></div>
+      <div>
+        <div class="callout-title">Case-Insensitive</div>
+        <div class="callout-text">The installer accepts <code>install.sh</code>, <code>Install.sh</code>, and <code>INSTALL.SH</code> equally. The script is also searched recursively inside subfolders.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Example install.sh</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">shell</span>
+        <span class="code-filename">install.sh</span>
+      </div>
+      <div class="code-body"><pre><span class="c-cmt">#!/system/bin/sh</span>
+
+<span class="c-fn">ui_print</span> <span class="c-str">"Installing My Addon..."</span>
+<span class="c-fn">ui_print</span> <span class="c-str">"Applying optimizations..."</span>
+
+<span class="c-cmt"># Always validate the path before writing</span>
+<span class="c-kw">if</span> [ ! -f <span class="c-str">"/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"</span> ]; <span class="c-kw">then</span>
+    <span class="c-fn">ui_print</span> <span class="c-str">"! CPU governor not available on this device"</span>
+    <span class="c-kw">exit</span> 1
+<span class="c-kw">fi</span>
+
+<span class="c-fn">echo</span> <span class="c-str">"performance"</span> &gt; /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+<span class="c-fn">ui_print</span> <span class="c-str">"Done! Addon is now active."</span></pre></div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Available Helper Functions</div>
+    <div class="border-table">
+      <table class="prop-table">
+        <thead><tr><th>Function</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="prop-key">ui_print "message"</span></td>
+            <td>Prints a message to the live installer log shown to the user during installation.</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">set_perm 0 0 0755 /file</span></td>
+            <td>Sets ownership and permissions on a specific file.</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">set_perm_recursive /dir 0 0 0755 0644</span></td>
+            <td>Sets permissions recursively on a directory.</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">$TURBOFPS_ADDON</span></td>
+            <td>Environment variable automatically injected — full path to your extracted addon folder.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── S4 UNINSTALL ── -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Uninstall Scripts</div>
+        <div class="section-sub">Runs when your addon is removed or its toggle is turned OFF</div>
+      </div>
+    </div>
+
+    <p>When a user uninstalls your addon or turns off the toggle, the installer looks for an uninstall script and runs it. Accepted filenames (searched in order):</p>
+
+    <div class="script-grid">
+      <div class="script-card">
+        <div class="script-rank r1">1</div>
+        <div>
+          <div class="script-name">customize.sh</div>
+          <div class="script-desc">Runs first — handles both install and uninstall directions.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r2">2</div>
+        <div>
+          <div class="script-name">uninstall.sh</div>
+          <div class="script-desc">Standard uninstall script.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">3</div>
+        <div>
+          <div class="script-name">deactivate.sh</div>
+          <div class="script-desc">Alternative name.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">4</div>
+        <div>
+          <div class="script-name">revert.sh</div>
+          <div class="script-desc">Alternative name.</div>
+        </div>
+      </div>
+      <div class="script-card">
+        <div class="script-rank r3">5</div>
+        <div>
+          <div class="script-name">reset.sh</div>
+          <div class="script-desc">Alternative name.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Example uninstall.sh</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">shell</span>
+        <span class="code-filename">uninstall.sh</span>
+      </div>
+      <div class="code-body"><pre><span class="c-cmt">#!/system/bin/sh</span>
+
+<span class="c-fn">ui_print</span> <span class="c-str">"Removing My Addon..."</span>
+<span class="c-fn">ui_print</span> <span class="c-str">"Reverting changes..."</span>
+
+<span class="c-cmt"># Restore the default value</span>
+<span class="c-fn">echo</span> <span class="c-str">"schedutil"</span> &gt; /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+<span class="c-fn">ui_print</span> <span class="c-str">"Uninstall complete. System restored."</span></pre></div>
+    </div>
+
+    <div class="callout error">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-warn"/></svg></div>
+      <div>
+        <div class="callout-title">Critical Rule — Always Revert</div>
+        <div class="callout-text">Every system change made during installation <strong>must</strong> be reversed during uninstallation. Failing to clean up can leave the device in an unstable state and will result in your addon being reported by users.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S5 STATUS.SH ── -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Status Checker</div>
+        <div class="section-sub">Optional — adds a real-time status button to your addon card</div>
+      </div>
+    </div>
+
+    <p>When you include a <code>status.sh</code> file in your addon folder, TurboFPS Pro automatically adds a <strong>Status</strong> button to your addon card. Tapping it runs the script and streams all output live to a log overlay — without requiring any additional setup from you.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>How It Works</div>
+    <ul class="steps">
+      <li><div class="step-num">1</div><span>Add <strong>status.sh</strong> anywhere inside your addon folder (the installer finds it recursively).</span></li>
+      <li><div class="step-num">2</div><span>When the user taps the Status button, TurboFPS runs the script via Shizuku privileged shell.</span></li>
+      <li><div class="step-num">3</div><span>All output from <code>echo</code> and <code>ui_print</code> is streamed live to a scrollable log screen.</span></li>
+      <li><div class="step-num">4</div><span>The log stays open until the user taps back — giving them time to read the full output.</span></li>
+    </ul>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Example status.sh</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">shell</span>
+        <span class="code-filename">status.sh</span>
+      </div>
+      <div class="code-body"><pre><span class="c-cmt">#!/system/bin/sh</span>
+
+<span class="c-fn">echo</span> <span class="c-str">"======================================="</span>
+<span class="c-fn">echo</span> <span class="c-str">"  My Addon - Status Check"</span>
+<span class="c-fn">echo</span> <span class="c-str">"======================================="</span>
+
+<span class="c-var">CURRENT</span>=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2&gt;/dev/null)
+
+<span class="c-kw">if</span> [ <span class="c-str">"$CURRENT"</span> = <span class="c-str">"performance"</span> ]; <span class="c-kw">then</span>
+    <span class="c-fn">echo</span> <span class="c-str">"  Status  : ACTIVE"</span>
+    <span class="c-fn">echo</span> <span class="c-str">"  Governor: performance"</span>
+<span class="c-kw">else</span>
+    <span class="c-fn">echo</span> <span class="c-str">"  Status  : INACTIVE"</span>
+    <span class="c-fn">echo</span> <span class="c-str">"  Governor: $CURRENT (expected: performance)"</span>
+<span class="c-kw">fi</span>
+
+<span class="c-fn">echo</span> <span class="c-str">"  Device : $(getprop ro.product.manufacturer) $(getprop ro.product.model)"</span>
+<span class="c-fn">echo</span> <span class="c-str">"  Android: $(getprop ro.build.version.release)"</span>
+<span class="c-fn">echo</span> <span class="c-str">"======================================="</span></pre></div>
+    </div>
+
+    <div class="callout success">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>
+      <div>
+        <div class="callout-title">Tips for a Good Status Script</div>
+        <div class="callout-text">Always read the actual system values your addon changed — never fake output. Show ACTIVE / INACTIVE / PARTIAL clearly at the top. Include device info and Android version for easy debugging. Do <strong>NOT</strong> use emoji characters — they cause encoding errors on some devices.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S6 CHANGELOG ── -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Changelog</div>
+        <div class="section-sub">Optional — adds a version history button to your addon card</div>
+      </div>
+    </div>
+
+    <p>Including a <code>changes.txt</code> file enables a <strong>Changelog</strong> button on your addon card. Users tap it to see a scrollable bottom sheet with your version history. Highly recommended for any published addon.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Requirements</div>
+    <ul class="checklist">
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>File name must be exactly <code>changes.txt</code> (case-sensitive on some devices)</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Plain text only — no HTML or Markdown</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Use UTF-8 encoding with Unix line endings (LF, not CRLF)</li>
+      <li><div class="check-ico no"><svg viewBox="0 0 24 24"><use href="#ico-close"/></svg></div>Do not use Windows-style CRLF line endings — they show as ^M characters</li>
+    </ul>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Recommended Format</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">text</span>
+        <span class="code-filename">changes.txt</span>
+      </div>
+      <div class="code-body"><pre><span class="c-cmt">======================================</span>
+<span class="c-hl"> My Addon - Changelog</span>
+<span class="c-cmt">======================================</span>
+
+<span class="c-fn">v2.0</span> (2026-03-01)
+<span class="c-cmt">----------------</span>
+<span class="c-str">Added status.sh for real-time checks</span>
+<span class="c-str">Improved uninstall cleanup</span>
+<span class="c-str">Fixed crash on Android 14</span>
+
+<span class="c-fn">v1.0</span> (2026-01-01)
+<span class="c-cmt">----------------</span>
+<span class="c-str">Initial release</span>
+
+<span class="c-cmt">--------------------------------------</span>
+<span class="c-cmt">Author : YourName</span>
+<span class="c-cmt">======================================</span></pre></div>
+    </div>
+  </section>
+
+  <!-- ── S7 WEB UI ── -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Web UI Page</div>
+        <div class="section-sub">Optional — a full interactive HTML settings page inside your addon</div>
+      </div>
+    </div>
+
+    <p>You can include a full HTML page that opens as a settings/control panel for your addon. This lets you build interactive mode selectors, dashboards, sliders, and more — all with custom design — without any limitations on what you can create with HTML and JavaScript.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Folder Structure</div>
+    <p>Put your Web UI inside a <span class="folder-badge">webroot/</span> folder (or <span class="folder-badge">addon-ui/</span>) inside your addon directory. TurboFPS searches these folder names automatically and serves files from them.</p>
+
+    <div class="tree-card">
+      <span class="tree-root">my_addon_folder/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── module.prop<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;├── install.sh<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-req">webroot/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Web UI folder</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-req">action.html</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Entry page (loaded first)</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-opt">style.css</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="tree-opt">app.js</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="tree-opt">icon.png</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tree-comment">← Images inside webroot load directly</span>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-info"/></svg></div>
+      <div>
+        <div class="callout-title">Accepted Folder Names</div>
+        <div class="callout-text">TurboFPS accepts: <code>webroot</code>, <code>addon-ui</code>, <code>Mod-UI</code>, <code>mod-ui</code>, <code>ui</code>, <code>www</code>. If none of these exist, it recursively searches for any folder containing <code>index.html</code> or <code>action.html</code>.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Entry Page</div>
+    <p>The WebView loads <code>action.html</code> if it exists; otherwise it loads <code>index.html</code>. All files inside your webroot folder are served and accessible directly by filename — no paths needed.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>WebView Capabilities</div>
+    <ul class="checklist">
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Full JavaScript enabled</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>DOM Storage enabled (localStorage, sessionStorage)</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>CSS animations, custom fonts, external CDN resources</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>File chooser / file picker supported</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Download links handled automatically</li>
+      <li><div class="check-ico no"><svg viewBox="0 0 24 24"><use href="#ico-close"/></svg></div>Access outside your webroot folder is blocked for security</li>
+    </ul>
+  </section>
+
+  <!-- ── S8 BANNER ── -->
+  <section class="section" id="s8">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">Banner Image</div>
+        <div class="section-sub">Optional — visual branding on your addon card</div>
+      </div>
+    </div>
+
+    <p>Include one image file to add a custom background to your addon card in TurboFPS Pro. The installer automatically finds the first image in your addon folder and uses it.</p>
+
+    <div class="border-table">
+      <table class="prop-table">
+        <thead><tr><th>Property</th><th>Recommended Value</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="prop-key">Supported formats</span></td>
+            <td>.png, .jpg, .jpeg</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">Recommended size</span></td>
+            <td>800 × 600 px or any landscape ratio</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">Display opacity</span></td>
+            <td>~36% — shown as a subtle background behind card content</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">Max file size</span></td>
+            <td>Under 500 KB recommended for faster loading</td>
+          </tr>
+          <tr>
+            <td><span class="prop-key">Filename</span></td>
+            <td>Any name — installer picks the first image found (e.g. <code>banner.png</code>)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout success">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>
+      <div>
+        <div class="callout-title">Design Tip</div>
+        <div class="callout-text">Since the image is shown at ~36% opacity over the card surface, dark or desaturated images with subtle gradients work best. Avoid busy or high-contrast images that make text hard to read.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S9 JS BRIDGE API ── -->
+  <section class="section" id="s9">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <div>
+        <div class="section-title">JavaScript Bridge API</div>
+        <div class="section-sub">Run shell commands and interact with the app from your Web UI</div>
+      </div>
+    </div>
+
+    <p>When your Web UI page opens, TurboFPS injects a JavaScript bridge object called <code>TurboAndroid</code>. You can call its methods from any JavaScript code inside your webroot to execute shell commands, show toasts, read addon info, and control the UI chrome.</p>
+
+    <div class="callout info">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-info"/></svg></div>
+      <div>
+        <div class="callout-title">KernelSU Compatibility</div>
+        <div class="callout-text">TurboFPS also registers a <code>ksu</code> alias pointing to the same bridge. Community addons built for KernelSU will work without modification.</div>
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Available Methods</div>
+
+    <!-- exec sync -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.exec(cmd)</div>
+          <div class="method-desc-text">Execute a shell command synchronously and get the output as a string.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-cmt">// Synchronous — returns output directly</span>
+<span class="c-kw">var</span> <span class="c-var">output</span> = <span class="c-fn">TurboAndroid</span>.exec(<span class="c-str">"getprop ro.product.model"</span>);
+<span class="c-fn">console</span>.log(<span class="c-var">output</span>);</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- exec async -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.exec(cmd, callback)</div>
+          <div class="method-desc-text">Execute a shell command asynchronously. Calls <code>callback(exitCode, stdout, stderr)</code> when done.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-cmt">// Async with callback</span>
+<span class="c-fn">TurboAndroid</span>.exec(
+    <span class="c-str">"cat /proc/cpuinfo"</span>,
+    <span class="c-kw">function</span>(<span class="c-var">exitCode</span>, <span class="c-var">stdout</span>, <span class="c-var">stderr</span>) {
+        <span class="c-kw">if</span> (<span class="c-var">exitCode</span> === <span class="c-hl">0</span>) {
+            document.getElementById(<span class="c-str">"output"</span>).textContent = <span class="c-var">stdout</span>;
+        } <span class="c-kw">else</span> {
+            <span class="c-fn">console</span>.error(<span class="c-var">stderr</span>);
+        }
+    }
+);</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- exec with options -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.exec(cmd, options, callback)</div>
+          <div class="method-desc-text">Async with extra options — custom working directory and extra environment variables.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-fn">TurboAndroid</span>.exec(
+    <span class="c-str">"./my_script.sh"</span>,
+    <span class="c-fn">JSON</span>.stringify({
+        cwd: <span class="c-str">"/data/local/tmp/turbofps/plugins/my_addon"</span>,
+        env: { <span class="c-str">"MY_MODE"</span>: <span class="c-str">"turbo"</span> }
+    }),
+    <span class="c-kw">function</span>(<span class="c-var">code</span>, <span class="c-var">out</span>, <span class="c-var">err</span>) { <span class="c-fn">console</span>.log(<span class="c-var">out</span>); }
+);</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- toast -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.toast(message)</div>
+          <div class="method-desc-text">Show an Android toast notification.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-fn">TurboAndroid</span>.toast(<span class="c-str">"Settings saved!"</span>);</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- moduleInfo -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.moduleInfo()</div>
+          <div class="method-desc-text">Returns addon metadata as a JSON string — id, name, version, and moduleDir path.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-kw">var</span> <span class="c-var">info</span> = <span class="c-fn">JSON</span>.parse(<span class="c-fn">TurboAndroid</span>.moduleInfo());
+<span class="c-cmt">// { id: "com.you.addon", name: "My Addon", version: "1.0", moduleDir: "/data/..." }</span>
+<span class="c-fn">console</span>.log(<span class="c-var">info</span>.name, <span class="c-var">info</span>.version);</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- getImageBase64 -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.getImageBase64(filename)</div>
+          <div class="method-desc-text">Load an image from the addon root (outside webroot) as a base64 data URI. Images inside webroot load directly with <code>&lt;img src="file.png"&gt;</code> — use this only for images in the addon root.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-cmt">// Only for images OUTSIDE webroot (in addon root folder)</span>
+<span class="c-kw">var</span> <span class="c-var">src</span> = <span class="c-fn">TurboAndroid</span>.getImageBase64(<span class="c-str">"banner.png"</span>);
+document.getElementById(<span class="c-str">"bg"</span>).src = <span class="c-var">src</span>;
+
+<span class="c-cmt">// Images INSIDE webroot — just reference directly</span>
+<span class="c-cmt">// &lt;img src="icon.png"&gt; works without any bridge call</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- fullScreen -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.fullScreen(enable)</div>
+          <div class="method-desc-text">Hide or show system bars (status + navigation). Pass <code>true</code> to go fullscreen, <code>false</code> to restore.</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-fn">TurboAndroid</span>.fullScreen(<span class="c-hl">true</span>);   <span class="c-cmt">// Hide system bars</span>
+<span class="c-fn">TurboAndroid</span>.fullScreen(<span class="c-hl">false</span>);  <span class="c-cmt">// Restore system bars</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- setSystemBarsColor -->
+    <div class="method-card">
+      <div class="method-header">
+        <span class="method-badge">TurboAndroid</span>
+        <div>
+          <div class="method-name">.setSystemBarsColor(color, darkIcons)</div>
+          <div class="method-desc-text">Set the color of both status bar and navigation bar. Use <code>darkIcons: true</code> for light backgrounds (dark icons), <code>false</code> for dark backgrounds (light icons).</div>
+        </div>
+      </div>
+      <div class="method-body">
+        <div class="code-wrap" style="margin:0">
+          <div class="code-header"><span class="code-lang">javascript</span></div>
+          <div class="code-body"><pre><span class="c-cmt">// Dark background UI — use light icons</span>
+<span class="c-fn">TurboAndroid</span>.setSystemBarsColor(<span class="c-str">"#0f0f0f"</span>, <span class="c-hl">false</span>);
+
+<span class="c-cmt">// Light background UI — use dark icons</span>
+<span class="c-fn">TurboAndroid</span>.setSystemBarsColor(<span class="c-str">"#FFFFFF"</span>, <span class="c-hl">true</span>);</pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Environment Variables in Scripts</div>
+    <p>These variables are automatically available in every shell command run through the bridge:</p>
+    <div class="env-card">
+      <div class="env-list">
+        <div class="env-row">
+          <div class="env-key">$TURBOFPS_MODULE_DIR</div>
+          <div class="env-val">Full path to your addon's folder. Use this to reference files inside your addon.</div>
+        </div>
+        <div class="env-row">
+          <div class="env-key">$TURBOFPS_ADDON</div>
+          <div class="env-val">Same as MODULE_DIR — also injected for install/uninstall scripts.</div>
+        </div>
+        <div class="env-row">
+          <div class="env-key">$TURBOFPS_PLUGINS</div>
+          <div class="env-val">Path to the plugins directory where all addons are stored.</div>
+        </div>
+        <div class="env-row">
+          <div class="env-key">$PATH</div>
+          <div class="env-val">Extended automatically to include your addon's <code>system/bin</code> folder (if it exists), so bundled binaries are found first.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div>
+      <div>
+        <div class="callout-title">Safety Filter</div>
+        <div class="callout-text">All commands sent via <code>.exec()</code> pass through a built-in safety filter. Destructive commands (filesystem wipes, fork bombs, remote code execution via wget/curl, block device writes, etc.) are automatically blocked and logged. This protects users from malicious addons.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S10 BATCH INSTALLER ── -->
+  <section class="section" id="s10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div>
+        <div class="section-title">Batch Installer</div>
+        <div class="section-sub">Distribute multiple addons in one ZIP</div>
+      </div>
+    </div>
+
+    <p>TurboFPS Pro includes a <strong>Batch Installer</strong> that lets you package multiple addons into a single master ZIP. Users select it once and all compatible addons inside are installed in sequence — with live progress shown for each one.</p>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Batch ZIP Structure</div>
+    <div class="batch-visual">
+      <div class="batch-row master">
+        <div class="batch-ico"><svg viewBox="0 0 24 24"><use href="#ico-package"/></svg></div>
+        my_addon_pack.zip &nbsp;<span style="font-weight:400;opacity:.7;font-size:11px">← Master ZIP (user selects this)</span>
+      </div>
+      <div class="batch-row child">
+        <div class="batch-ico"><svg viewBox="0 0 24 24"><use href="#ico-package"/></svg></div>
+        cpu_tweaks.zip
+      </div>
+      <div class="batch-row child">
+        <div class="batch-ico"><svg viewBox="0 0 24 24"><use href="#ico-package"/></svg></div>
+        gpu_optimizer.zip
+      </div>
+      <div class="batch-row child">
+        <div class="batch-ico"><svg viewBox="0 0 24 24"><use href="#ico-package"/></svg></div>
+        network_boost.zip
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Rules</div>
+    <ul class="checklist">
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Each inner ZIP must be a valid TurboFPS addon with <code>turbofps=true</code></li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Inner ZIPs must be placed directly at the root of the master ZIP (no subfolders)</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Already-installed addons with the same <code>id</code> are skipped (not reinstalled)</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Addons with a higher <code>versionCode</code> than the installed one are updated automatically</li>
+      <li><div class="check-ico no"><svg viewBox="0 0 24 24"><use href="#ico-close"/></svg></div>Inner ZIPs missing <code>turbofps=true</code> are silently skipped (not counted as failures)</li>
+    </ul>
+
+    <div class="callout info">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-info"/></svg></div>
+      <div>
+        <div class="callout-title">How to Create a Batch ZIP</div>
+        <div class="callout-text">Select all your addon ZIPs (e.g. <code>cpu_tweaks.zip</code>, <code>gpu_optimizer.zip</code>) and add them together into a new ZIP. Do not wrap them in a subfolder — they must be at the root of the master ZIP.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S11 SAFETY ── -->
+  <section class="section" id="s11">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div>
+        <div class="section-title">Safety &amp; Best Practices</div>
+        <div class="section-sub">Writing reliable, safe, and compatible addons</div>
+      </div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Shell Script Rules</div>
+    <ul class="checklist">
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Start every script with <code>#!/system/bin/sh</code></li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Use POSIX-compliant syntax only — avoid bash-specific features</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Use Unix line endings (LF) — Windows CRLF causes silent failures</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Use absolute paths for all file operations</li>
+      <li><div class="check-ico ok"><svg viewBox="0 0 24 24"><use href="#ico-check"/></svg></div>Always check if a file/path exists before writing to it</li>
+      <li><div class="check-ico no"><svg viewBox="0 0 24 24"><use href="#ico-close"/></svg></div>Never use emoji in shell scripts — encoding errors on some devices</li>
+      <li><div class="check-ico no"><svg viewBox="0 0 24 24"><use href="#ico-close"/></svg></div>Never use destructive commands without validating paths first</li>
+    </ul>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Error Handling Pattern</div>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-lang">shell</span>
+        <span class="code-filename">install.sh — error handling</span>
+      </div>
+      <div class="code-body"><pre><span class="c-cmt">#!/system/bin/sh</span>
+
+<span class="c-cmt"># 1. Check path before writing</span>
+<span class="c-kw">if</span> [ ! -f <span class="c-str">"/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"</span> ]; <span class="c-kw">then</span>
+    <span class="c-fn">ui_print</span> <span class="c-str">"! CPU governor not available on this device"</span>
+    <span class="c-kw">exit</span> 1
+<span class="c-kw">fi</span>
+
+<span class="c-cmt"># 2. Handle write failure with ||</span>
+<span class="c-fn">echo</span> <span class="c-str">"performance"</span> &gt; /sys/.../scaling_governor || {
+    <span class="c-fn">ui_print</span> <span class="c-str">"! Failed to apply setting"</span>
+    <span class="c-kw">exit</span> 1
+}
+
+<span class="c-cmt"># 3. Confirm success</span>
+<span class="c-var">VERIFY</span>=$(cat /sys/.../scaling_governor)
+<span class="c-kw">if</span> [ <span class="c-str">"$VERIFY"</span> = <span class="c-str">"performance"</span> ]; <span class="c-kw">then</span>
+    <span class="c-fn">ui_print</span> <span class="c-str">"Applied successfully"</span>
+<span class="c-kw">else</span>
+    <span class="c-fn">ui_print</span> <span class="c-str">"! Verification failed"</span>
+<span class="c-kw">fi</span></pre></div>
+    </div>
+
+    <div class="sub-heading"><div class="sub-bar"></div>Good vs. Bad Practices</div>
+    <div class="compare-grid">
+      <div class="compare-card compare-good">
+        <div class="compare-head">
+          <svg viewBox="0 0 24 24"><use href="#ico-check"/></svg>
+          GOOD
+        </div>
+        <div class="code-wrap" style="margin:0;border-radius:0 0 var(--radius-md) var(--radius-md);">
+          <div class="code-body" style="padding:14px 16px;"><pre style="font-size:12px"><span class="c-cmt"># Check before writing</span>
+<span class="c-kw">if</span> [ -f <span class="c-str">"$path"</span> ]; <span class="c-kw">then</span>
+    <span class="c-fn">echo</span> <span class="c-str">"value"</span> &gt; <span class="c-str">"$path"</span>
+<span class="c-kw">fi</span>
+
+<span class="c-cmt"># Revert on uninstall</span>
+<span class="c-fn">echo</span> <span class="c-str">"schedutil"</span> &gt; <span class="c-str">"$path"</span>
+
+<span class="c-cmt"># Use ui_print for user output</span>
+<span class="c-fn">ui_print</span> <span class="c-str">"Setting applied"</span></pre></div>
+        </div>
+      </div>
+      <div class="compare-card compare-bad">
+        <div class="compare-head">
+          <svg viewBox="0 0 24 24"><use href="#ico-close"/></svg>
+          BAD
+        </div>
+        <div class="code-wrap" style="margin:0;border-radius:0 0 var(--radius-md) var(--radius-md);">
+          <div class="code-body" style="padding:14px 16px;"><pre style="font-size:12px"><span class="c-cmt"># Write blindly without check</span>
+<span class="c-fn">echo</span> <span class="c-str">"value"</span> &gt; <span class="c-str">"$path"</span>
+
+<span class="c-cmt"># No uninstall / cleanup</span>
+<span class="c-cmt">(no uninstall.sh)</span>
+
+<span class="c-cmt"># Emoji in shell script</span>
+<span class="c-fn">echo</span> <span class="c-str">"Done! ✅"</span></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-shield"/></svg></div>
+      <div>
+        <div class="callout-title">Test Before Publishing</div>
+        <div class="callout-text">Always test your addon on a non-production device before sharing it. Install it, verify it works, toggle it off, verify it uninstalls cleanly, and check the status.sh output. A addon that leaves broken state will be reported by users.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S12 PUBLISHING CHECKLIST ── -->
+  <section class="section" id="s12">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <div>
+        <div class="section-title">Publishing Checklist</div>
+        <div class="section-sub">Everything to verify before you release your addon</div>
+      </div>
+    </div>
+
+    <ul class="steps">
+      <li><div class="step-num">1</div><span><strong>ZIP structure</strong> — your ZIP opens to a single folder. No files at root level.</span></li>
+      <li><div class="step-num">2</div><span><strong>module.prop</strong> — all required fields present, <code>turbofps=true</code> set, <code>id</code> is unique and in reverse domain format.</span></li>
+      <li><div class="step-num">3</div><span><strong>Install script</strong> — uses <code>#!/system/bin/sh</code>, LF line endings, checks paths before writing, prints clear messages via <code>ui_print</code>.</span></li>
+      <li><div class="step-num">4</div><span><strong>Uninstall script</strong> — reverts every change made by install.sh. Tested that device returns to normal state after toggle-off.</span></li>
+      <li><div class="step-num">5</div><span><strong>No emoji</strong> in any shell script file.</span></li>
+      <li><div class="step-num">6</div><span><strong>Status script (if included)</strong> — reads real system values, output is clear and human-readable, exits with code 0.</span></li>
+      <li><div class="step-num">7</div><span><strong>changes.txt (if included)</strong> — UTF-8 encoding, LF line endings, file name is exactly <code>changes.txt</code>.</span></li>
+      <li><div class="step-num">8</div><span><strong>Web UI (if included)</strong> — inside <code>webroot/</code> folder, entry page is <code>action.html</code> or <code>index.html</code>, tested in-app.</span></li>
+      <li><div class="step-num">9</div><span><strong>Banner image (if included)</strong> — under 500 KB, landscape ratio, no sensitive branding.</span></li>
+      <li><div class="step-num">10</div><span><strong>Full install-toggle-uninstall cycle</strong> tested on a real device without issues.</span></li>
+    </ul>
+
+    <div class="callout info">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><use href="#ico-info"/></svg></div>
+      <div>
+        <div class="callout-title">Support &amp; Community</div>
+        <div class="callout-text">For support, new releases, and to share your addons with the community, visit the official Telegram channel: <a href="https://t.me/YTTxHuExanOP" style="color:var(--md-on-primary-container);font-weight:700;">t.me/YTTxHuExanOP</a></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>TurboFPS Pro — <strong>Addon Creator Guide</strong> · v2.99+</span>
+  <span>Developed by <strong>TheXnOp1</strong> · <a href="https://t.me/YTTxHuExanOP">t.me/YTTxHuExanOP</a></span>
+</footer>
+
+<script>
+// Sidebar active nav on scroll
+const sections = document.querySelectorAll('section[id], .hero[id]');
+const navItems = document.querySelectorAll('.nav-item[href]');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const a = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { threshold: 0.18, rootMargin: '-8% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+
+navItems.forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(item.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Mobile sidebar toggle
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  if (sb.style.display === 'block') {
+    sb.style.display = '';
+  } else {
+    sb.style.display = 'block';
+    sb.style.position = 'fixed';
+    sb.style.top = '64px';
+    sb.style.left = '0';
+    sb.style.height = 'calc(100vh - 64px)';
+    sb.style.zIndex = '100';
+    sb.style.width = '280px';
+    sb.style.boxShadow = '0 4px 20px rgba(0,0,0,.15)';
+  }
+}
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  const btn = document.querySelector('.mob-menu-btn');
+  if (sb.style.display === 'block' && !sb.contains(e.target) && !btn.contains(e.target)) {
+    sb.style.display = '';
+  }
+});
+</script>
+</body>
+</html>
